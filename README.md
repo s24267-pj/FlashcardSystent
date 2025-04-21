@@ -1,4 +1,5 @@
 MVP:
+
 	MUST:
 		- Ekran listy zestawów fiszek
 		- Dodawanie nowych zestawów fiszek
