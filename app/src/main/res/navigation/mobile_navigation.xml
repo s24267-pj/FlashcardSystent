@@ -13,13 +13,22 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.flashcardsystent.ui.dashboard.DashboardFragment"
+        android:name="com.example.flashcardsystent.ui.cardsManagment.ManagmentFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_cards_managment" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.flashcardsystent.ui.notifications.NotificationsFragment"
+        android:name="com.example.flashcardsystent.ui.notifications.StatsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/addDeckFragment"
+        android:name="com.example.flashcardsystent.ui.cardsManagment.AddDeckFragment"
+        android:label="Dodaj zestaw"
+        tools:layout="@layout/fragment_add_deck" />
+    <action
+        android:id="@+id/action_managmentFragment_to_addDeckFragment"
+        app:destination="@id/addDeckFragment" />
+
 </navigation>
