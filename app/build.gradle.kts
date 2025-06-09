@@ -50,8 +50,8 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
 
-    implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
+    implementation(libs.room.runtime.v271)
+    kapt(libs.room.compiler.v271)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

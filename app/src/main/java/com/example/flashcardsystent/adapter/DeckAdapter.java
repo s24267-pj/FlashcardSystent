@@ -16,12 +16,8 @@ import java.util.List;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder> {
 
-    private List<Deck> deckList = new ArrayList<>();
     private final OnDeckClickListener listener;
-
-    public interface OnDeckClickListener {
-        void onDeckClick(Deck deck);
-    }
+    private List<Deck> deckList = new ArrayList<>();
 
     public DeckAdapter(OnDeckClickListener listener) {
         this.listener = listener;
@@ -39,7 +35,15 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder
     public void onBindViewHolder(@NonNull DeckViewHolder holder, int position) {
         Deck currentDeck = deckList.get(position);
         holder.textViewName.setText(currentDeck.name);
-        holder.itemView.setOnClickListener(v -> listener.onDeckClick(currentDeck));
+
+        holder.itemView.setOnClickListener(v ->
+                listener.onDeckClick(currentDeck)
+        );
+
+        holder.itemView.setOnLongClickListener(v -> {
+            listener.onDeckLongClick(currentDeck);
+            return true;
+        });
     }
 
     @Override
@@ -50,6 +54,12 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder
     public void setDeckList(List<Deck> decks) {
         this.deckList = decks;
         notifyDataSetChanged();
+    }
+
+    public interface OnDeckClickListener {
+        void onDeckClick(Deck deck);
+
+        void onDeckLongClick(Deck deck);
     }
 
     static class DeckViewHolder extends RecyclerView.ViewHolder {
