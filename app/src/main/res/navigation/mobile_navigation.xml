@@ -15,13 +15,19 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.flashcardsystent.ui.cardsManagment.ManagmentFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_cards_managment" />
+        tools:layout="@layout/fragment_cards_managment">
+
+        <action
+            android:id="@+id/action_navigation_dashboard_to_deckDetailFragment"
+            app:destination="@id/deckDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.flashcardsystent.ui.notifications.StatsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_stats" />
+
     <fragment
         android:id="@+id/addDeckFragment"
         android:name="com.example.flashcardsystent.ui.cardsManagment.AddDeckFragment"
@@ -30,5 +36,18 @@
     <action
         android:id="@+id/action_managmentFragment_to_addDeckFragment"
         app:destination="@id/addDeckFragment" />
+
+    <fragment
+        android:id="@+id/deckDetailFragment"
+        android:name="com.example.flashcardsystent.ui.cardsManagment.DeckDetailFragment"
+        android:label="Szczegóły zestawu"
+        tools:layout="@layout/fragment_deck_detail">
+        <argument
+            android:name="deckId"
+            app:argType="integer" />
+        <argument
+            android:name="deckName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
