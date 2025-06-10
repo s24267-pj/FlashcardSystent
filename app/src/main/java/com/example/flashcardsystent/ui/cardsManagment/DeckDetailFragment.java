@@ -10,14 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardsystent.R;
+import com.example.flashcardsystent.adapter.CardAdapter;
 import com.example.flashcardsystent.data.Deck;
-import com.example.flashcardsystent.viewmodel.DeckViewModel;
+import com.example.flashcardsystent.viewmodel.CardViewModel;
 
 public class DeckDetailFragment extends Fragment {
 
-    private DeckViewModel deckViewModel;
+    private CardViewModel cardViewModel;
+    private CardAdapter cardAdapter;
+    private int deckId;
     private Deck currentDeck;
 
     @Nullable
@@ -29,19 +34,36 @@ public class DeckDetailFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        TextView textName = view.findViewById(R.id.text_deck_name);
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Bundle args = getArguments();
         if (args != null) {
-            int id = args.getInt("deckId");
-            String name = args.getString("deckName");
-            textName.setText(name);
+            deckId = args.getInt("deckId");
+            String deckName = args.getString("deckName", "");
+            TextView textName = view.findViewById(R.id.text_deck_name);
+            textName.setText(deckName);
 
-            currentDeck = new Deck(name);
-            currentDeck.id = id;
+            currentDeck = new Deck(deckName);
+            currentDeck.id = deckId;
         }
 
-        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+        cardViewModel = new ViewModelProvider(requireActivity()).get(CardViewModel.class);
+
+        RecyclerView rv = view.findViewById(R.id.rv_cards);
+        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
+        cardAdapter = new CardAdapter();
+        rv.setAdapter(cardAdapter);
+
+        cardViewModel.getCardsByDeck(deckId)
+                .observe(getViewLifecycleOwner(), cards -> {
+                    cardAdapter.setItems(cards);
+                });
+
+        view.findViewById(R.id.button_add_cards).setOnClickListener(v ->
+                AddCardsBottomSheet.newInstance(deckId)
+                        .show(getChildFragmentManager(), "ADD_CARDS")
+        );
     }
 }
