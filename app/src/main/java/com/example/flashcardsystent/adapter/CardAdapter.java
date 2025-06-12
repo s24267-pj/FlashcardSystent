@@ -4,17 +4,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardVH> {
     private final List<Card> items = new ArrayList<>();
+    private final OnCardClickListener clickListener;
+    public CardAdapter(OnCardClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public CardVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_card, parent, false);
@@ -26,6 +34,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardVH> {
         Card c = items.get(position);
         holder.front.setText(c.front);
         holder.back.setText(c.back);
+
+        holder.itemView.setOnClickListener(v ->
+                clickListener.onCardClick(c)
+        );
     }
 
     @Override
@@ -39,12 +51,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardVH> {
         notifyDataSetChanged();
     }
 
+    public Card getItem(int position) {
+        return items.get(position);
+    }
+
+    public interface OnCardClickListener {
+        void onCardClick(Card card);
+    }
+
     static class CardVH extends RecyclerView.ViewHolder {
         final TextView front, back;
+
         CardVH(@NonNull View itemView) {
             super(itemView);
             front = itemView.findViewById(R.id.text_front);
-            back  = itemView.findViewById(R.id.text_back);
+            back = itemView.findViewById(R.id.text_back);
         }
     }
 }

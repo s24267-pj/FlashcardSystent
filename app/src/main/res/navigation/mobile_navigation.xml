@@ -53,6 +53,9 @@
         <argument
             android:name="deckName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_deckDetailFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
     </fragment>
 
     <fragment
@@ -70,6 +73,19 @@
         android:label="Quiz">
         <argument
             android:name="setId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editCardFragment"
+        android:name="com.example.flashcardsystent.ui.cardsManagment.EditCardFragment"
+        android:label="Edytuj fiszkę"
+        tools:layout="@layout/fragment_edit_card">
+        <argument
+            android:name="cardId"
+            app:argType="integer" />
+        <argument
+            android:name="deckId"
             app:argType="integer" />
     </fragment>
 
