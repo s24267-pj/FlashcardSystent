@@ -9,7 +9,12 @@
         android:id="@+id/navigation_home"
         android:name="com.example.flashcardsystent.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_quizSetListFragment"
+            app:destination="@id/quizSetListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -48,6 +53,24 @@
         <argument
             android:name="deckName"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quizSetListFragment"
+        android:name="com.example.flashcardsystent.ui.quiz.QuizSetListFragment"
+        android:label="Wybierz zestaw do quizu">
+        <action
+            android:id="@+id/action_quizSetListFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.flashcardsystent.ui.quiz.QuizFragment"
+        android:label="Quiz">
+        <argument
+            android:name="setId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

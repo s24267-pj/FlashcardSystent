@@ -2,19 +2,16 @@ package com.example.flashcardsystent;
 
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.flashcardsystent.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private NavController navController; // 👈 dodaj to
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +19,29 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_main);
+        navController = navHostFragment.getNavController();
+
+        binding.navView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navigation_home) {
+                navController.popBackStack(R.id.navigation_home, false);
+                navController.navigate(R.id.navigation_home);
+                return true;
+            } else if (itemId == R.id.navigation_dashboard) {
+                navController.popBackStack(R.id.navigation_dashboard, false);
+                navController.navigate(R.id.navigation_dashboard);
+                return true;
+            } else if (itemId == R.id.navigation_notifications) {
+                navController.popBackStack(R.id.navigation_notifications, false);
+                navController.navigate(R.id.navigation_notifications);
+                return true;
+            }
+
+            return false;
+        });
 
     }
-
 }

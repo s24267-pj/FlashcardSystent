@@ -19,4 +19,8 @@ public interface DeckDao {
 
     @Query("SELECT * FROM Deck")
     LiveData<List<Deck>> getAllDecks();
+
+    @Query("SELECT * FROM Deck")
+    List<Deck> getAll();
+
 }

@@ -9,7 +9,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
+import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -26,8 +29,10 @@ public class HomeFragment extends Fragment {
         binding.buttonModeClassic.setOnClickListener(v ->
                 Toast.makeText(getContext(), "Tryb klasyczny (mock)", Toast.LENGTH_SHORT).show());
 
-        binding.buttonModeQuiz.setOnClickListener(v ->
-                Toast.makeText(getContext(), "Tryb quizu (mock)", Toast.LENGTH_SHORT).show());
+        binding.buttonQuizMode.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_quizSetListFragment);
+
+        });
 
         binding.buttonModeTyping.setOnClickListener(v ->
                 Toast.makeText(getContext(), "Tryb pisania (mock)", Toast.LENGTH_SHORT).show());

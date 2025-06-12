@@ -17,9 +17,9 @@
         android:text="Classic" />
 
     <Button
-        android:id="@+id/button_mode_quiz"
+        android:id="@+id/button_quiz_mode"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:text="Quiz" />
 
     <Button
