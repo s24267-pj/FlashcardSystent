@@ -22,5 +22,8 @@ public interface CardDao {
 
     @Query("SELECT * FROM Card WHERE deckId = :deckId")
     LiveData<List<Card>> getCardsByDeck(int deckId);
+
+    @Query("SELECT * FROM Card WHERE id = :id")
+    LiveData<Card> getCardById(int id);
 }
 
