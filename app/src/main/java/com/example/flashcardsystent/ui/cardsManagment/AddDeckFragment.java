@@ -41,7 +41,7 @@ public class AddDeckFragment extends Fragment {
                 Toast.makeText(getContext(), "Podaj nazwę zestawu", Toast.LENGTH_SHORT).show();
             } else {
                 deckViewModel.insert(new Deck(name));
-                Navigation.findNavController(v).popBackStack(); // wraca do listy
+                Navigation.findNavController(v).popBackStack();
             }
         });
 

@@ -50,7 +50,6 @@ public class DeckDetailFragment extends Fragment {
         RecyclerView rv = view.findViewById(R.id.rv_cards);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Adapter z clickListenerem otwierającym edycję fiszki
         cardAdapter = new CardAdapter(card -> {
             Bundle bundle = new Bundle();
             bundle.putInt("cardId", card.id);
@@ -60,11 +59,9 @@ public class DeckDetailFragment extends Fragment {
         });
         rv.setAdapter(cardAdapter);
 
-        // Obserwujemy listę fiszek i aktualizujemy adapter
         cardViewModel.getCardsByDeck(deckId)
                 .observe(getViewLifecycleOwner(), cardAdapter::setItems);
 
-        // Przesunięcie w prawo usuwa fiszkę
         ItemTouchHelper.SimpleCallback swipeCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
                     @Override
@@ -86,7 +83,6 @@ public class DeckDetailFragment extends Fragment {
                 };
         new ItemTouchHelper(swipeCallback).attachToRecyclerView(rv);
 
-        // Przycisk dodawania fiszek
         view.findViewById(R.id.button_add_cards)
                 .setOnClickListener(v ->
                         AddCardsBottomSheet

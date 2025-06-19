@@ -25,7 +25,6 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Obsługa przycisków
         binding.buttonModeClassic.setOnClickListener(v ->
                 Toast.makeText(getContext(), "Tryb klasyczny (mock)", Toast.LENGTH_SHORT).show());
 

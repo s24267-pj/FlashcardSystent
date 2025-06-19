@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.cardsManagment.ManagmentFragment">
 
-    <!-- Lista zestawów fiszek -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/deck_list"
         android:layout_width="412dp"
@@ -18,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Przycisk "Dodaj fiszki" -->
     <Button
         android:id="@+id/button_add_deck"
         android:layout_width="wrap_content"

@@ -45,7 +45,7 @@ public class QuizFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        deckId = getArguments().getInt("setId", -1); // używamy setId, bo tak nazwany jest argument
+        deckId = getArguments().getInt("setId", -1);
         Log.d("QUIZ", "deckId received: " + deckId);
 
         cardViewModel = new ViewModelProvider(requireActivity()).get(CardViewModel.class);
@@ -62,7 +62,7 @@ public class QuizFragment extends Fragment {
                 Collections.shuffle(allCards);
                 loadNextQuestion();
             } else {
-                textQuestion.setText("Za mało fiszek w zestawie (min. 4).");
+                textQuestion.setText("");
                 for (Button btn : answerButtons) {
                     btn.setEnabled(false);
                 }
@@ -88,9 +88,9 @@ public class QuizFragment extends Fragment {
             btn.setText(options.get(i));
             btn.setOnClickListener(v -> {
                 if (btn.getText().equals(correctCard.back)) {
-                    btn.setBackgroundColor(0xFF81C784); // zielony
+                    btn.setBackgroundColor(0xFF81C784);
                 } else {
-                    btn.setBackgroundColor(0xFFE57373); // czerwony
+                    btn.setBackgroundColor(0xFFE57373);
                 }
 
                 btn.postDelayed(() -> {
