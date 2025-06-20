@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Tryb klasyczny (mock)", Toast.LENGTH_SHORT).show());
 
         binding.buttonQuizMode.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_quizSetListFragment);
+            Navigation.findNavController(v).navigate(R.id.quizSetListFragment);
 
         });
 

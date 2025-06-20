@@ -73,7 +73,8 @@ public class ManagmentFragment extends Fragment {
         root.findViewById(R.id.button_add_deck)
                 .setOnClickListener(v ->
                         Navigation.findNavController(v)
-                                .navigate(R.id.action_managmentFragment_to_addDeckFragment)
+                                .navigate(R.id.action_navigation_dashboard_to_addDeckFragment)
+
                 );
 
         return root;

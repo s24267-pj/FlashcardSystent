@@ -5,13 +5,15 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Deck.class, Card.class}, version = 2)
+@Database(entities = {Deck.class, Card.class, QuizResult.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
     public abstract DeckDao deckDao();
     public abstract CardDao cardDao();
+
+    public abstract QuizResultDao quizResultDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

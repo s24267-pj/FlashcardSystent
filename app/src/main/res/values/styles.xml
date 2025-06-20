@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="QuizAnswerButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">140dp</item> <!-- zwiększono z 60dp -->
+        <item name="android:textSize">20sp</item> <!-- lekko większy tekst -->
+        <item name="android:layout_marginBottom">24dp</item> <!-- więcej przestrzeni między -->
+        <item name="android:backgroundTint">#E0E0E0</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:padding">16dp</item> <!-- więcej przestrzeni wewnątrz -->
+        <item name="cornerRadius">24dp</item> <!-- bardziej zaokrąglone -->
+    </style>
+</resources>

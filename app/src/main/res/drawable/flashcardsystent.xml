@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Tylna karta -->
+    <path
+        android:fillColor="#339999"
+        android:pathData="M40,40h100a10,10 0 0 1 10,10v100a10,10 0 0 1 -10,10h-100a10,10 0 0 1 -10,-10v-100a10,10 0 0 1 10,-10z"
+        android:fillAlpha="0.4" />
+
+    <!-- Przednia karta -->
+    <path
+        android:fillColor="#66CCCC"
+        android:pathData="M60,60h100a10,10 0 0 1 10,10v100a10,10 0 0 1 -10,10h-100a10,10 0 0 1 -10,-10v-100a10,10 0 0 1 10,-10z" />
+
+    <!-- Błyskawica -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M110,80l-20,40h15l-15,40l40,-50h-20l10,-30z" />
+
+</vector>
+
