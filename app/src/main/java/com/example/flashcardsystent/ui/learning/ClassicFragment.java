@@ -20,7 +20,6 @@ public class ClassicFragment extends Fragment {
 
     private ClassicViewModel viewModel;
     private TextView cardText;
-    private Button buttonKnow, buttonDontKnow;
 
     @Nullable
     @Override
@@ -36,10 +35,12 @@ public class ClassicFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         cardText = view.findViewById(R.id.text_card);
-        buttonKnow = view.findViewById(R.id.button_know);
-        buttonDontKnow = view.findViewById(R.id.button_dont_know);
+        Button buttonKnow = view.findViewById(R.id.button_know);
+        Button buttonDontKnow = view.findViewById(R.id.button_dont_know);
 
-        int deckId = getArguments().getInt("deckId", -1);
+        Bundle args = getArguments();
+
+        int deckId = (args != null) ? args.getInt("setId", -1) : -1;
 
         viewModel = new ViewModelProvider(this).get(ClassicViewModel.class);
         viewModel.loadCards(deckId);

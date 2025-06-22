@@ -39,22 +39,19 @@ public class QuizSummaryFragment extends Fragment {
         Button buttonBack = view.findViewById(R.id.button_back_home);
         Button buttonStats = view.findViewById(R.id.button_view_stats);
 
-        resultText.setText(getString(R.string.correct) + correctCount + " / " + totalCount);
+        resultText.setText(getString(R.string.quiz_result_summary, correctCount, totalCount));
 
         buttonBack.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_home)
         );
 
-        buttonStats.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(
-                    R.id.navigation_summary,
-                    null,
-                    new androidx.navigation.NavOptions.Builder()
-                            .setPopUpTo(R.id.navigation_home, true) // lub navigation_dashboard
-                            .setLaunchSingleTop(true)
-                            .build()
-            );
-        });
-
+        buttonStats.setOnClickListener(v -> Navigation.findNavController(v).navigate(
+                R.id.navigation_summary,
+                null,
+                new androidx.navigation.NavOptions.Builder()
+                        .setPopUpTo(R.id.navigation_home, true) // lub navigation_home
+                        .setLaunchSingleTop(true)
+                        .build()
+        ));
     }
 }

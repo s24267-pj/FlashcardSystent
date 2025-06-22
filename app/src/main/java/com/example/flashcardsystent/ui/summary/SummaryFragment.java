@@ -31,23 +31,23 @@ public class SummaryFragment extends Fragment {
         SummaryViewModel viewModel = new ViewModelProvider(this).get(SummaryViewModel.class);
 
         viewModel.totalQuizzes.observe(getViewLifecycleOwner(), count ->
-                binding.textTotalGames.setText(getString(R.string.total_quizzes) + (count != null ? count : 0))
+                binding.textTotalGames.setText(getString(R.string.total_quizzes_with_value, count != null ? count : 0))
         );
 
         viewModel.correctAnswers.observe(getViewLifecycleOwner(), count ->
-                binding.textTotalCorrect.setText(getString(R.string.correct_answers) + (count != null ? count : 0))
+                binding.textTotalCorrect.setText(getString(R.string.correct_answers_with_value, count != null ? count : 0))
         );
 
         viewModel.wrongAnswers.observe(getViewLifecycleOwner(), count ->
-                binding.textTotalWrong.setText(getString(R.string.wrong_answers) + (count != null ? count : 0))
+                binding.textTotalWrong.setText(getString(R.string.wrong_answers_with_value, count != null ? count : 0))
         );
 
         TextView lastScore = binding.textLastScore;
 
         viewModel.lastResult.observe(getViewLifecycleOwner(), result -> {
             if (result != null) {
-                lastScore.setText(getString(R.string.correct) + result.correct +
-                        " / " + getString(R.string.wrong_answers_2) + result.wrong);
+                lastScore.setText(getString(R.string.last_result_summary, result.correct, result.wrong));
+
             } else {
                 lastScore.setText(R.string.no_data);
             }
@@ -65,6 +65,7 @@ public class SummaryFragment extends Fragment {
         );
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
