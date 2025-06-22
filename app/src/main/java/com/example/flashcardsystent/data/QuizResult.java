@@ -8,12 +8,12 @@ public class QuizResult {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public int deckId;
-    public int correct;
+    final int deckId;
+    public final int correct;
 
     public int wrong;
-    public int total;
-    public long timestamp;
+    final int total;
+    final long timestamp;
 
     public QuizResult(int deckId, int correct, int total, long timestamp) {
         this.deckId = deckId;

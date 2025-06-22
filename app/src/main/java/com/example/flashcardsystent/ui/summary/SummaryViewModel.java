@@ -10,16 +10,13 @@ import androidx.lifecycle.Transformations;
 import com.example.flashcardsystent.data.AppDatabase;
 import com.example.flashcardsystent.data.QuizResult;
 import com.example.flashcardsystent.data.QuizResultDao;
-import com.example.flashcardsystent.data.QuizResultRepository;
-
-import java.util.List;
 
 public class SummaryViewModel extends AndroidViewModel {
     public final LiveData<Integer> totalQuizzes;
     public final LiveData<Integer> correctAnswers;
     public final LiveData<Integer> wrongAnswers;
 
-    public LiveData<QuizResult> lastResult;
+    public final LiveData<QuizResult> lastResult;
 
     public SummaryViewModel(@NonNull Application application) {
         super(application);

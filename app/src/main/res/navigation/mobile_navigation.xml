@@ -16,6 +16,44 @@
             app:destination="@id/quizSetListFragment" />
     </fragment>
 
+    <!-- Przeglądanie fiszek -->
+    <fragment
+        android:id="@+id/browseSetListFragment"
+        android:name="com.example.flashcardsystent.ui.browse.BrowseSetListFragment"
+        android:label="Przeglądaj zestawy"
+        tools:layout="@layout/fragment_browse_set_list">
+        <action
+            android:id="@+id/action_browseSetListFragment_to_browseCardsFragment"
+            app:destination="@id/browseCardsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/browseCardsFragment"
+        android:name="com.example.flashcardsystent.ui.browse.BrowseCardsFragment"
+        android:label="Fiszki"
+        tools:layout="@layout/fragment_browse_cards">
+        <argument
+            android:name="deckId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_browseCardsFragment_to_browseSummaryFragment"
+            app:destination="@id/browseSummaryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/browseSummaryFragment"
+        android:name="com.example.flashcardsystent.ui.browse.BrowseSummaryFragment"
+        android:label="Koniec przeglądania"
+        tools:layout="@layout/fragment_browse_summary">
+        <action
+            android:id="@+id/action_browseSummaryFragment_to_browseSetListFragment"
+            app:destination="@id/browseSetListFragment" />
+        <action
+            android:id="@+id/action_browseSummaryFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+
     <!-- Panel zarządzania fiszkami -->
     <fragment
         android:id="@+id/navigation_dashboard"

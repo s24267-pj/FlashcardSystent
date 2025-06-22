@@ -30,10 +30,10 @@ import java.util.List;
 public class QuizFragment extends Fragment {
 
     private int deckId;
-    private CardViewModel cardViewModel;
+    CardViewModel cardViewModel;
 
     private TextView textQuestion;
-    private Button[] answerButtons = new Button[4];
+    final Button[] answerButtons = new Button[4];
     private List<Card> allCards = new ArrayList<>();
     private int currentIndex = 0;
     private int correctCount = 0;

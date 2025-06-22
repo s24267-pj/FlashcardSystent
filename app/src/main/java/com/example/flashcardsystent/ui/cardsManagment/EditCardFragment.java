@@ -23,8 +23,8 @@ public class EditCardFragment extends Fragment {
 
     private CardViewModel cardViewModel;
     private EditText inputFront, inputBack;
-    private Button btnSave;
-    private int cardId, deckId;
+    Button btnSave;
+    int cardId, deckId;
     private Card currentCard;
 
     @Nullable

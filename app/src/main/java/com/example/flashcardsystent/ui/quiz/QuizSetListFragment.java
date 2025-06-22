@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -42,7 +40,7 @@ public class QuizSetListFragment extends Fragment {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Deck> decks = deckDao.getAll();
             requireActivity().runOnUiThread(() -> {
-                com.example.flashcardsystent.ui.quiz.QuizSetAdapter adapter = new com.example.flashcardsystent.ui.quiz.QuizSetAdapter(decks, deck -> {
+                com.example.flashcardsystent.adapter.QuizSetAdapter adapter = new com.example.flashcardsystent.adapter.QuizSetAdapter(decks, deck -> {
                     Bundle bundle = new Bundle();
                     bundle.putInt("setId", deck.id);
                     Navigation.findNavController(binding.getRoot())

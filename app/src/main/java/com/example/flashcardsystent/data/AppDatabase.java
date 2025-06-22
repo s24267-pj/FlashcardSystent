@@ -18,11 +18,14 @@ public abstract class AppDatabase extends RoomDatabase {
     public static synchronized AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(
-                    context.getApplicationContext(),
-                    AppDatabase.class,
-                    "flashcards-db"
-            ).fallbackToDestructiveMigration().build();
+                            context.getApplicationContext(),
+                            AppDatabase.class,
+                            "flashcards-db"
+                    )
+                    .fallbackToDestructiveMigrationFrom()
+                    .build();
         }
         return INSTANCE;
     }
+
 }

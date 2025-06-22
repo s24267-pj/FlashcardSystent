@@ -23,7 +23,7 @@ import com.example.flashcardsystent.viewmodel.DeckViewModel;
 public class ManagmentFragment extends Fragment {
 
     private DeckViewModel deckViewModel;
-    private DeckAdapter adapter;
+    DeckAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
