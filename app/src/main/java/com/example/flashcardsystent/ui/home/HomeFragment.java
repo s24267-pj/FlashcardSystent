@@ -24,8 +24,9 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.buttonModeClassic.setOnClickListener(v ->
-                Toast.makeText(getContext(), "Tryb klasyczny (mock)", Toast.LENGTH_SHORT).show());
+        binding.buttonModeClassic.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.classicSetListFragment);
+        });
 
         binding.buttonQuizMode.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.quizSetListFragment));
