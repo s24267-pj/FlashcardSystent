@@ -13,7 +13,7 @@ import androidx.navigation.Navigation;
 
 import com.example.flashcardsystent.R;
 
-public class LearningSummaryFragment extends Fragment {
+public class ClassicSummaryFragment extends Fragment {
 
     @Nullable
     @Override

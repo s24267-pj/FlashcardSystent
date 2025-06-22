@@ -16,7 +16,12 @@
     <string name="mode_typing">Tryb pisania</string>
     <string name="home_description">Wybierz tryb nauki i rozpocznij przygodę z fiszkami!</string>
     <string name="button_browse_mode">Przeglądaj fiszki</string>
-
-
+    <string name="too_few_flashcards">Zbyt mało fiszek w zestawie</string>
+    <string name="correct">"Poprawnych: "</string>
+    <string name="total_quizzes">"Rozegrane quizy: "</string>
+    <string name="correct_answers">"Poprawne odpowiedzi: "</string>
+    <string name="wrong_answers">"Błędne odpowiedzi: "</string>
+    <string name="no_data">Brak danych</string>
+    <string name="wrong_answers_2">"Błędnych: "</string>
 
 </resources>

@@ -11,16 +11,15 @@ import com.example.flashcardsystent.data.Card;
 import com.example.flashcardsystent.data.CardRepository;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
-public class LearningViewModel extends AndroidViewModel {
+public class ClassicViewModel extends AndroidViewModel {
 
     private final CardRepository repository;
     private final Queue<Card> cardQueue = new LinkedList<>();
     private final MutableLiveData<Card> currentCard = new MutableLiveData<>();
 
-    public LearningViewModel(@NonNull Application application) {
+    public ClassicViewModel(@NonNull Application application) {
         super(application);
         repository = new CardRepository(application);
     }

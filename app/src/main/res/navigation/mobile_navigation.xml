@@ -143,7 +143,7 @@
 
     <fragment
         android:id="@+id/learningFragment"
-        android:name="com.example.flashcardsystent.ui.learning.LearningFragment"
+        android:name="com.example.flashcardsystent.ui.learning.ClassicFragment"
         android:label="Tryb klasyczny"
         tools:layout="@layout/fragment_learning">
         <argument
@@ -162,7 +162,7 @@
 
     <fragment
         android:id="@+id/learningSummaryFragment"
-        android:name="com.example.flashcardsystent.ui.learning.LearningSummaryFragment"
+        android:name="com.example.flashcardsystent.ui.learning.ClassicSummaryFragment"
         android:label="Koniec nauki"
         tools:layout="@layout/fragment_learning_summary" />
 

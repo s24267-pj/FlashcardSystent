@@ -69,7 +69,7 @@ public class QuizFragment extends Fragment {
                 Collections.shuffle(allCards);
                 loadNextQuestion();
             } else {
-                textQuestion.setText("Zbyt mało fiszek w zestawie");
+                textQuestion.setText(R.string.too_few_flashcards);
                 for (Button btn : answerButtons) {
                     btn.setEnabled(false);
                 }

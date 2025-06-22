@@ -14,11 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.flashcardsystent.R;
-import com.example.flashcardsystent.viewmodel.LearningViewModel;
+import com.example.flashcardsystent.viewmodel.ClassicViewModel;
 
-public class LearningFragment extends Fragment {
+public class ClassicFragment extends Fragment {
 
-    private LearningViewModel viewModel;
+    private ClassicViewModel viewModel;
     private TextView cardText;
     private Button buttonKnow, buttonDontKnow;
 
@@ -41,7 +41,7 @@ public class LearningFragment extends Fragment {
 
         int deckId = getArguments().getInt("deckId", -1);
 
-        viewModel = new ViewModelProvider(this).get(LearningViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ClassicViewModel.class);
         viewModel.loadCards(deckId);
 
         viewModel.getCurrentCard().observe(getViewLifecycleOwner(), card -> {
@@ -52,6 +52,7 @@ public class LearningFragment extends Fragment {
                 cardText.setText(card.front);
                 cardText.setOnClickListener(new View.OnClickListener() {
                     private boolean isFront = true;
+
                     @Override
                     public void onClick(View v) {
                         isFront = !isFront;

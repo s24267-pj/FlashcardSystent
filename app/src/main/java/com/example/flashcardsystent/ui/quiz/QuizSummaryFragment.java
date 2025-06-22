@@ -39,7 +39,7 @@ public class QuizSummaryFragment extends Fragment {
         Button buttonBack = view.findViewById(R.id.button_back_home);
         Button buttonStats = view.findViewById(R.id.button_view_stats);
 
-        resultText.setText("Poprawnych: " + correctCount + " / " + totalCount);
+        resultText.setText(getString(R.string.correct) + correctCount + " / " + totalCount);
 
         buttonBack.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_home)
