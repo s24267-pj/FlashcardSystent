@@ -2,11 +2,17 @@
 
 ## MUST
 - **Flashcard Set List Screen**
-- **Add New Flashcard Sets**
-- **Edit Existing Flashcard Sets**
-- **Study Mode**
-  - Scroll through & flip cards  
-  - “I know” / “I don’t know” buttons  
+  - Add new flashcar set
+- **Flashcard Set Details Screen**
+  - Edit flashcard set
+  - Add new flashcards to set
+  - Delete existing flashcards
+  - Delete flashcard set
+- **Clasic Mode**  
+  - “I know” / “I don’t know” buttons
+- **Browse Mode**
+  - 4 flashcards on screen
+  - Fliping card for answer 
 
 ## SHOULD
 - **Basic Quiz**
