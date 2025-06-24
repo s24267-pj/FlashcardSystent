@@ -1,31 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="24dp"
+    android:background="@android:color/white"
     tools:context=".ui.home.HomeFragment">
 
-    <Button
-        android:id="@+id/button_mode_classic"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:text="Classic" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/button_quiz_mode"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:text="Quiz" />
+        <!-- Logo i tytuł -->
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/app_logo"
+            android:src="@drawable/flashcardsystent" />
 
-    <Button
-        android:id="@+id/button_mode_typing"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:text="Typing" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <!-- Tryby gry -->
+        <Button
+            android:id="@+id/button_mode_classic"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/button_primary"
+            android:text="@string/mode_classic"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_quiz_mode"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/button_secondary"
+            android:text="@string/mode_quiz"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_browse_mode"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/button_browse"
+            android:text="@string/button_browse_mode"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_mode_typing"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/button_tertiary"
+            android:text="@string/mode_typing"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <!-- Opis -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/home_description"
+            android:textAlignment="center"
+            android:textColor="#666"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>

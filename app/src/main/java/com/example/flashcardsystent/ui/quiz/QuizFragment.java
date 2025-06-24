@@ -1,5 +1,6 @@
 package com.example.flashcardsystent.ui.quiz;
 
+import java.util.concurrent.Executors;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,10 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.flashcardsystent.data.AppDatabase;
+import com.example.flashcardsystent.data.QuizResult;
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Card;
@@ -24,12 +30,13 @@ import java.util.List;
 public class QuizFragment extends Fragment {
 
     private int deckId;
-    private CardViewModel cardViewModel;
+    CardViewModel cardViewModel;
 
     private TextView textQuestion;
-    private Button[] answerButtons = new Button[4];
+    final Button[] answerButtons = new Button[4];
     private List<Card> allCards = new ArrayList<>();
     private int currentIndex = 0;
+    private int correctCount = 0;
     private Card correctCard;
 
     @Nullable
@@ -62,7 +69,7 @@ public class QuizFragment extends Fragment {
                 Collections.shuffle(allCards);
                 loadNextQuestion();
             } else {
-                textQuestion.setText("");
+                textQuestion.setText("Zbyt mało fiszek w zestawie");
                 for (Button btn : answerButtons) {
                     btn.setEnabled(false);
                 }
@@ -71,7 +78,35 @@ public class QuizFragment extends Fragment {
     }
 
     private void loadNextQuestion() {
-        correctCard = allCards.get(currentIndex % allCards.size());
+        if (!isAdded() || getView() == null) return; // 👈 ochrona przed crashami
+
+        if (currentIndex >= allCards.size()) {
+            // Zapisz wynik do bazy
+            QuizResult result = new QuizResult(
+                    deckId,
+                    correctCount,
+                    allCards.size(),
+                    System.currentTimeMillis()
+            );
+            Executors.newSingleThreadExecutor().execute(() -> {
+                AppDatabase.getInstance(requireContext())
+                        .quizResultDao()
+                        .insert(result);
+            });
+
+            // Przejdź do podsumowania
+            Bundle bundle = new Bundle();
+            bundle.putInt("correctCount", correctCount);
+            bundle.putInt("totalCount", allCards.size());
+
+            Navigation.findNavController(getView())
+                    .navigate(R.id.action_quizFragment_to_quizSummaryFragment, bundle);
+            return;
+        }
+
+
+
+        correctCard = allCards.get(currentIndex);
         textQuestion.setText(correctCard.front);
 
         List<String> options = new ArrayList<>();
@@ -86,25 +121,21 @@ public class QuizFragment extends Fragment {
         for (int i = 0; i < 4; i++) {
             Button btn = answerButtons[i];
             btn.setText(options.get(i));
+            btn.setBackgroundColor(requireContext().getColor(android.R.color.holo_blue_light));
             btn.setOnClickListener(v -> {
-                if (btn.getText().equals(correctCard.back)) {
+                boolean isCorrect = btn.getText().equals(correctCard.back);
+                if (isCorrect) {
                     btn.setBackgroundColor(0xFF81C784);
+                    correctCount++;
                 } else {
                     btn.setBackgroundColor(0xFFE57373);
                 }
 
                 btn.postDelayed(() -> {
-                    resetButtonColors();
                     currentIndex++;
                     loadNextQuestion();
                 }, 800);
             });
-        }
-    }
-
-    private void resetButtonColors() {
-        for (Button btn : answerButtons) {
-            btn.setBackgroundColor(requireContext().getColor(android.R.color.holo_blue_light));
         }
     }
 }

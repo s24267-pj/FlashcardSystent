@@ -8,4 +8,17 @@
 
     <color name="black">#121212</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="quiz_button_bg">#E0E0E0</color>
+    <color name="quiz_button_text">#000000</color>
+    <color name="quiz_button_correct">#81C784</color>
+    <color name="quiz_button_wrong">#E57373</color>
+
+    <color name="button_primary">#2196F3</color>
+    <color name="button_secondary">#4CAF50</color>
+    <color name="button_tertiary">#FF9800</color>
+    <color name="button_browse">#9C27B0</color>
+    <color name="colorPrimaryDark">#1565C0</color>
+
+
 </resources>

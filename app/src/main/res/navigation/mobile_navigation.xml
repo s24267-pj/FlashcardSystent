@@ -3,61 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_home">
 
+    <!-- Ekran główny -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.flashcardsystent.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
-
         <action
             android:id="@+id/action_homeFragment_to_quizSetListFragment"
             app:destination="@id/quizSetListFragment" />
     </fragment>
 
+    <!-- Przeglądanie fiszek -->
+    <fragment
+        android:id="@+id/browseSetListFragment"
+        android:name="com.example.flashcardsystent.ui.browse.BrowseSetListFragment"
+        android:label="Przeglądaj zestawy"
+        tools:layout="@layout/fragment_browse_set_list">
+        <action
+            android:id="@+id/action_browseSetListFragment_to_browseCardsFragment"
+            app:destination="@id/browseCardsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/browseCardsFragment"
+        android:name="com.example.flashcardsystent.ui.browse.BrowseCardsFragment"
+        android:label="Fiszki"
+        tools:layout="@layout/fragment_browse_cards">
+        <argument
+            android:name="deckId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_browseCardsFragment_to_browseSummaryFragment"
+            app:destination="@id/browseSummaryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/browseSummaryFragment"
+        android:name="com.example.flashcardsystent.ui.browse.BrowseSummaryFragment"
+        android:label="Koniec przeglądania"
+        tools:layout="@layout/fragment_browse_summary">
+        <action
+            android:id="@+id/action_browseSummaryFragment_to_browseSetListFragment"
+            app:destination="@id/browseSetListFragment" />
+        <action
+            android:id="@+id/action_browseSummaryFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+
+    <!-- Panel zarządzania fiszkami -->
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.flashcardsystent.ui.cardsManagment.ManagmentFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_cards_managment">
-
         <action
             android:id="@+id/action_navigation_dashboard_to_deckDetailFragment"
             app:destination="@id/deckDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_addDeckFragment"
+            app:destination="@id/addDeckFragment" />
     </fragment>
 
+    <!-- Panel statystyk -->
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.flashcardsystent.ui.notifications.StatsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_stats" />
+        android:id="@+id/navigation_summary"
+        android:name="com.example.flashcardsystent.ui.summary.SummaryFragment"
+        android:label="@string/title_summary"
+        tools:layout="@layout/fragment_summary" />
 
+    <!-- Dodawanie zestawu -->
     <fragment
         android:id="@+id/addDeckFragment"
         android:name="com.example.flashcardsystent.ui.cardsManagment.AddDeckFragment"
         android:label="Dodaj zestaw"
         tools:layout="@layout/fragment_add_deck" />
-    <action
-        android:id="@+id/action_managmentFragment_to_addDeckFragment"
-        app:destination="@id/addDeckFragment" />
 
+    <!-- Szczegóły zestawu -->
     <fragment
         android:id="@+id/deckDetailFragment"
         android:name="com.example.flashcardsystent.ui.cardsManagment.DeckDetailFragment"
         android:label="Szczegóły zestawu"
         tools:layout="@layout/fragment_deck_detail">
-        <argument
-            android:name="deckId"
-            app:argType="integer" />
-        <argument
-            android:name="deckName"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_deckDetailFragment_to_editCardFragment"
+        <argument android:name="deckId" app:argType="integer" />
+        <argument android:name="deckName" app:argType="string" />
+        <action android:id="@+id/action_deckDetailFragment_to_editCardFragment"
             app:destination="@id/editCardFragment" />
+        <action android:id="@+id/action_deckDetailFragment_to_addDeckFragment"
+            app:destination="@id/addDeckFragment" />
     </fragment>
 
+    <!-- Lista zestawów do quizu -->
     <fragment
         android:id="@+id/quizSetListFragment"
         android:name="com.example.flashcardsystent.ui.quiz.QuizSetListFragment"
@@ -67,26 +106,38 @@
             app:destination="@id/quizFragment" />
     </fragment>
 
+    <!-- Tryb quizu -->
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.example.flashcardsystent.ui.quiz.QuizFragment"
         android:label="Quiz">
-        <argument
-            android:name="setId"
-            app:argType="integer" />
+        <argument android:name="setId" app:argType="integer" />
+        <action
+            android:id="@+id/action_quizFragment_to_quizSummaryFragment"
+            app:destination="@id/quizSummaryFragment" />
     </fragment>
 
+    <!-- Edycja fiszki -->
     <fragment
         android:id="@+id/editCardFragment"
         android:name="com.example.flashcardsystent.ui.cardsManagment.EditCardFragment"
         android:label="Edytuj fiszkę"
         tools:layout="@layout/fragment_edit_card">
-        <argument
-            android:name="cardId"
-            app:argType="integer" />
-        <argument
-            android:name="deckId"
-            app:argType="integer" />
+        <argument android:name="cardId" app:argType="integer" />
+        <argument android:name="deckId" app:argType="integer" />
     </fragment>
 
+    <!-- Podsumowanie quizu -->
+    <fragment
+        android:id="@+id/quizSummaryFragment"
+        android:name="com.example.flashcardsystent.ui.quiz.QuizSummaryFragment"
+        android:label="Podsumowanie quizu"
+        tools:layout="@layout/fragment_quiz_summary">
+        <action
+            android:id="@+id/action_quizSummaryFragment_to_navigation_summary"
+            app:destination="@id/navigation_summary" />
+        <action
+            android:id="@+id/action_quizSummaryFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.flashcardsystent.ui.quiz;
+package com.example.flashcardsystent.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Deck;
 import java.util.List;
 
@@ -15,8 +17,8 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
         void onItemClick(Deck deck);
     }
 
-    private List<Deck> sets;
-    private OnItemClickListener listener;
+    final List<Deck> sets;
+    final OnItemClickListener listener;
 
     public QuizSetAdapter(List<Deck> sets, OnItemClickListener listener) {
         this.sets = sets;
@@ -27,14 +29,15 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_1, parent, false);
+                .inflate(R.layout.item_deck, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Deck deck = sets.get(position);
-        ((TextView) holder.itemView).setText(deck.name);
+        TextView deckName = holder.itemView.findViewById(R.id.deck_name);
+        deckName.setText(deck.name);
         holder.itemView.setOnClickListener(v -> listener.onItemClick(deck));
     }
 

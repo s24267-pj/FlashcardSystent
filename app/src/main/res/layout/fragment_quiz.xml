@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/text_question"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pytanie"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/button_answer_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Odpowiedź 1" />
+        <TextView
+            android:id="@+id/text_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_question_placeholder"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/button_answer_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Odpowiedź 2" />
+        <Button
+            style="@style/QuizAnswerButton"
+            android:id="@+id/button_answer_1"
+            android:text="@string/answer_1" />
 
-    <Button
-        android:id="@+id/button_answer_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Odpowiedź 3" />
+        <Button
+            style="@style/QuizAnswerButton"
+            android:id="@+id/button_answer_2"
+            android:text="@string/answer_2" />
 
-    <Button
-        android:id="@+id/button_answer_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Odpowiedź 4" />
-</LinearLayout>
+        <Button
+            style="@style/QuizAnswerButton"
+            android:id="@+id/button_answer_3"
+            android:text="@string/answer_3" />
+
+        <Button
+            style="@style/QuizAnswerButton"
+            android:id="@+id/button_answer_4"
+            android:text="@string/answer_4" />
+
+
+    </LinearLayout>
+</ScrollView>
