@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nowe fiszki"
+        android:text="@string/new_flashcards"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -25,5 +25,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Zapisz" />
+        android:text="@string/save" />
 </LinearLayout>

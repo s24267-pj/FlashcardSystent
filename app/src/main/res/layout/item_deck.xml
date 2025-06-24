@@ -19,7 +19,7 @@
             android:id="@+id/deck_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nazwa zestawu"
+            android:text="@string/deck_name"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#333333" />

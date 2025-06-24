@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Front"
+                android:text="@string/front"
                 android:textSize="24sp"
                 android:background="@android:color/holo_blue_light"
                 android:textColor="@android:color/white" />
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Back"
+                android:text="@string/back"
                 android:textSize="24sp"
                 android:background="@android:color/holo_green_dark"
                 android:textColor="@android:color/white"
@@ -46,12 +46,12 @@
         android:id="@+id/button_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Umiem" />
+        android:text="@string/i_know" />
 
     <Button
         android:id="@+id/button_dont_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nie umiem"
+        android:text="@string/i_dont_know"
         android:layout_marginTop="16dp"/>
 </LinearLayout>

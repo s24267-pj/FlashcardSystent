@@ -12,7 +12,7 @@
         android:gravity="center_horizontal">
 
         <TextView
-            android:text="Podsumowanie"
+            android:text="@string/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
@@ -35,7 +35,7 @@
                 android:id="@+id/text_total_games"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rozegrane quizy: 0"
+                android:text="@string/quizzes_played"
                 android:textSize="18sp"
                 android:textColor="#000"
                 android:layout_marginBottom="8dp"/>
@@ -44,7 +44,7 @@
                 android:id="@+id/text_total_correct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Poprawne odpowiedzi: 0"
+                android:text="@string/correct_answers"
                 android:textSize="18sp"
                 android:textColor="#4CAF50"
                 android:layout_marginBottom="8dp"/>
@@ -53,7 +53,7 @@
                 android:id="@+id/text_total_wrong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Błędne odpowiedzi: 0"
+                android:text="@string/wrong_answers"
                 android:textSize="18sp"
                 android:textColor="#F44336"/>
 
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ostatni wynik"
+            android:text="@string/last_result"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp"
@@ -72,7 +72,7 @@
             android:id="@+id/text_last_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brak danych"
+            android:text="@string/no_data"
             android:textSize="18sp"
             android:textColor="#2196F3"/>
 

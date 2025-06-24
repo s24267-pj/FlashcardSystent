@@ -13,7 +13,7 @@
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Fiszka"
+        android:text="@string/flashcard"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 </androidx.cardview.widget.CardView>
