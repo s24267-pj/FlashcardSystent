@@ -9,8 +9,6 @@
     <color name="black">#121212</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="quiz_button_bg">#E0E0E0</color>
-    <color name="quiz_button_text">#000000</color>
     <color name="quiz_button_correct">#81C784</color>
     <color name="quiz_button_wrong">#E57373</color>
 
