@@ -1,3 +1,7 @@
+# About FlashCardSystent
+
+This application allows users to learn using flashcards in an easy and fast way. The user can choose from 3 learning modes: quiz, browse mode, classic mode. In addition, the user has access to a summary of their learning and after each set of flashcards, they have access to the result.
+
 # MVP Feature List
 
 ## MUST
