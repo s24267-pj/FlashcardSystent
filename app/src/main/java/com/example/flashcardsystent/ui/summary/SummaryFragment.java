@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.databinding.FragmentSummaryBinding;
+import com.example.flashcardsystent.viewmodel.SummaryViewModel;
 
 public class SummaryFragment extends Fragment {
 
@@ -46,7 +47,7 @@ public class SummaryFragment extends Fragment {
 
         viewModel.lastResult.observe(getViewLifecycleOwner(), result -> {
             if (result != null) {
-                lastScore.setText(getString(R.string.last_result_summary, result.correct, result.wrong));
+                lastScore.setText(getString(R.string.last_result_summary, result.correct, result.getWrong()));
 
             } else {
                 lastScore.setText(R.string.no_data);

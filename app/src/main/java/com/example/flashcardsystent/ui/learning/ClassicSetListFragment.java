@@ -8,22 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.adapter.QuizSetAdapter;
-import com.example.flashcardsystent.data.AppDatabase;
-import com.example.flashcardsystent.data.Deck;
-import com.example.flashcardsystent.data.DeckDao;
-
-import java.util.List;
-import java.util.concurrent.Executors;
+import com.example.flashcardsystent.viewmodel.DeckViewModel;
 
 public class ClassicSetListFragment extends Fragment {
-
-    private DeckDao deckDao;
 
     @Nullable
     @Override
@@ -36,18 +30,16 @@ public class ClassicSetListFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recycler_classic_sets);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        deckDao = AppDatabase.getInstance(requireContext()).deckDao();
-
-        Executors.newSingleThreadExecutor().execute(() -> {
-            List<Deck> decks = deckDao.getAll();
-            requireActivity().runOnUiThread(() -> {
-                QuizSetAdapter adapter = new QuizSetAdapter(decks, deck -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("deckId", deck.id);
-                    Navigation.findNavController(view).navigate(R.id.learningFragment, bundle);
-                });
-                recycler.setAdapter(adapter);
-            });
+        // Utwórz adapter raz
+        QuizSetAdapter adapter = new QuizSetAdapter(deck -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("deckId", deck.id);
+            Navigation.findNavController(view).navigate(R.id.learningFragment, bundle);
         });
+        recycler.setAdapter(adapter);
+
+        // Obserwuj dane i aktualizuj listę
+        DeckViewModel viewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+        viewModel.getAllDecks().observe(getViewLifecycleOwner(), adapter::submitList);
     }
 }

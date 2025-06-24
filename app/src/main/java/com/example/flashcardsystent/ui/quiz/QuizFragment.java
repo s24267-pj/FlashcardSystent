@@ -1,6 +1,7 @@
 package com.example.flashcardsystent.ui.quiz;
 
 import java.util.concurrent.Executors;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,11 +31,10 @@ import java.util.List;
 
 public class QuizFragment extends Fragment {
 
-    private int deckId;
-    CardViewModel cardViewModel;
-
-    private TextView textQuestion;
     final Button[] answerButtons = new Button[4];
+    CardViewModel cardViewModel;
+    private int deckId;
+    private TextView textQuestion;
     private List<Card> allCards = new ArrayList<>();
     private int currentIndex = 0;
     private int correctCount = 0;
@@ -82,6 +82,8 @@ public class QuizFragment extends Fragment {
 
         if (currentIndex >= allCards.size()) {
             // Zapisz wynik do bazy
+            int wrongCount = allCards.size() - correctCount;
+
             QuizResult result = new QuizResult(
                     deckId,
                     correctCount,
@@ -103,7 +105,6 @@ public class QuizFragment extends Fragment {
                     .navigate(R.id.action_quizFragment_to_quizSummaryFragment, bundle);
             return;
         }
-
 
 
         correctCard = allCards.get(currentIndex);

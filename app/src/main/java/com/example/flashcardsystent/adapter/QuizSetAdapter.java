@@ -4,24 +4,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Deck;
-import java.util.List;
 
-public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHolder> {
+public class QuizSetAdapter extends ListAdapter<Deck, QuizSetAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(Deck deck);
     }
 
-    final List<Deck> sets;
-    final OnItemClickListener listener;
+    private final OnItemClickListener listener;
 
-    public QuizSetAdapter(List<Deck> sets, OnItemClickListener listener) {
-        this.sets = sets;
+    public QuizSetAdapter(OnItemClickListener listener) {
+        super(DIFF_CALLBACK);
         this.listener = listener;
     }
 
@@ -35,20 +35,29 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Deck deck = sets.get(position);
-        TextView deckName = holder.itemView.findViewById(R.id.deck_name);
-        deckName.setText(deck.name);
+        Deck deck = getItem(position);
+        holder.deckName.setText(deck.name);
         holder.itemView.setOnClickListener(v -> listener.onItemClick(deck));
     }
 
-    @Override
-    public int getItemCount() {
-        return sets.size();
-    }
+    public static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
+        final TextView deckName;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            deckName = itemView.findViewById(R.id.deck_name);
         }
     }
+
+    private static final DiffUtil.ItemCallback<Deck> DIFF_CALLBACK = new DiffUtil.ItemCallback<Deck>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Deck oldItem, @NonNull Deck newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Deck oldItem, @NonNull Deck newItem) {
+            return oldItem.name.equals(newItem.name);
+        }
+    };
 }

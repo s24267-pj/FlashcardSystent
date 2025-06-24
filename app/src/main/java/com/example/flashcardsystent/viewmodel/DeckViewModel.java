@@ -6,35 +6,34 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.flashcardsystent.data.AppDatabase;
 import com.example.flashcardsystent.data.Deck;
+import com.example.flashcardsystent.data.DeckRepositoryImpl;
+import com.example.flashcardsystent.repository.IDeckRepository;
 
 import java.util.List;
 
 public class DeckViewModel extends AndroidViewModel {
 
-    private final LiveData<List<Deck>> allDecks;
-    private final AppDatabase db;
+    private final IDeckRepository repository;
 
     public DeckViewModel(@NonNull Application application) {
         super(application);
-        db = AppDatabase.getInstance(application);
-        allDecks = db.deckDao().getAllDecks();
+        repository = new DeckRepositoryImpl(application);
     }
 
     public LiveData<List<Deck>> getAllDecks() {
-        return allDecks;
+        return repository.getAllDecks();
     }
 
     public void insert(Deck deck) {
-        new Thread(() -> db.deckDao().insert(deck)).start();
+        repository.insert(deck);
     }
 
     public void delete(Deck deck) {
-        new Thread(() -> db.deckDao().delete(deck)).start();
+        repository.delete(deck);
     }
 
     public void update(Deck deck) {
-        new Thread(() -> db.deckDao().update(deck)).start();
+        repository.update(deck);
     }
 }

@@ -9,19 +9,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.flashcardsystent.data.Card;
-import com.example.flashcardsystent.data.CardRepository;
+import com.example.flashcardsystent.data.CardRepositoryImpl;
 import com.example.flashcardsystent.util.CardQueueManager;
 
 public class ClassicViewModel extends AndroidViewModel {
 
-    private final CardRepository repository;
+    private final CardRepositoryImpl repository;
     private final CardQueueManager manager = new CardQueueManager();
     private final MutableLiveData<Card> currentCard = new MutableLiveData<>();
     private final MutableLiveData<Boolean> showingFront = new MutableLiveData<>(true);
 
     public ClassicViewModel(@NonNull Application application) {
         super(application);
-        repository = new CardRepository(application);
+        repository = new CardRepositoryImpl(application);
     }
 
     public void loadCards(int deckId, LifecycleOwner owner) {

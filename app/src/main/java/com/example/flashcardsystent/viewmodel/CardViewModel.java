@@ -6,21 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.flashcardsystent.data.AppDatabase;
 import com.example.flashcardsystent.data.Card;
-import com.example.flashcardsystent.data.CardDao;
-import com.example.flashcardsystent.data.CardRepository;
+import com.example.flashcardsystent.data.CardRepositoryImpl;
+import com.example.flashcardsystent.repository.ICardRepository;
 
 import java.util.List;
 
 public class CardViewModel extends AndroidViewModel {
-    private final CardRepository repository;
-    private final CardDao cardDao;
+
+    private final ICardRepository repository;
 
     public CardViewModel(@NonNull Application application) {
         super(application);
-        repository = new CardRepository(application);
-        cardDao = AppDatabase.getInstance(application).cardDao();
+        repository = new CardRepositoryImpl(application);
     }
 
     public LiveData<List<Card>> getCardsByDeck(int deckId) {
@@ -28,7 +26,7 @@ public class CardViewModel extends AndroidViewModel {
     }
 
     public LiveData<Card> getCardById(int id) {
-        return cardDao.getCardById(id);
+        return repository.getCardById(id);
     }
 
     public void insert(Card card) {
