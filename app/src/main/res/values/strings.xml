@@ -17,12 +17,10 @@
     <string name="home_description">Wybierz tryb nauki i rozpocznij przygodę z fiszkami!</string>
     <string name="button_browse_mode">Przeglądaj fiszki</string>
     <string name="too_few_flashcards">Zbyt mało fiszek w zestawie</string>
-    <string name="correct">"Poprawnych: "</string>
-    <string name="correct_answers_with_value">Correct answers: %1$d</string>
-    <string name="wrong_answers_with_value">Incorrect answers: %1$d</string>
+    <string name="correct_answers_with_value">Poprawne odpowiedzi: %1$d</string>
+    <string name="wrong_answers_with_value">Błędne odpowiedzi: %1$d</string>
     <string name="no_data">Brak danych</string>
-    <string name="wrong_answers_2">"Błędnych: "</string>
-    <string name="total_quizzes_with_value">Completed quizzes: %1$d</string>
+    <string name="total_quizzes_with_value">Ukończone quizy: %1$d</string>
     <string name="last_result_summary">Poprawne: %1$d / Błędne: %2$d</string>
     <string name="quiz_result_summary">Poprawnych: %1$d / %2$d</string>
     <string name="new_flashcards">Nowe fiszki</string>

@@ -15,6 +15,7 @@ import com.example.flashcardsystent.data.QuizResult;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -124,10 +125,11 @@ public class QuizFragment extends Fragment {
             btn.setOnClickListener(v -> {
                 boolean isCorrect = btn.getText().equals(correctCard.back);
                 if (isCorrect) {
-                    btn.setBackgroundColor(0xFF81C784);
+                    btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.quiz_button_correct));
+
                     correctCount++;
                 } else {
-                    btn.setBackgroundColor(0xFFE57373);
+                    btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.quiz_button_wrong));
                 }
 
                 btn.postDelayed(() -> {
