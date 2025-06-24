@@ -3,7 +3,7 @@
 ## MUST
 - **Flashcard Set List Screen**
   - Add new flashcar set
-- **Flashcard Set Details Screen*
+- **Flashcard Set Details Screen**
   - Edit flashcard set
   - Add new flashcards to set
   - Delete existing flashcards
