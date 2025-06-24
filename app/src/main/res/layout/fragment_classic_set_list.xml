@@ -5,8 +5,8 @@
     android:paddingTop="44dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/browse_set_list"
+        android:id="@+id/recycler_classic_sets"
         android:layout_width="match_parent"
-        android:layout_height="840dp"
-        android:padding="1dp" />
+        android:layout_height="match_parent"
+        android:padding="16dp"/>
 </FrameLayout>

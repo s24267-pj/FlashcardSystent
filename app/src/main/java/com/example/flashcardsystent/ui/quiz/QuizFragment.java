@@ -51,7 +51,6 @@ public class QuizFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         deckId = getArguments().getInt("setId", -1);
         Log.d("QUIZ", "deckId received: " + deckId);
 
@@ -69,7 +68,7 @@ public class QuizFragment extends Fragment {
                 Collections.shuffle(allCards);
                 loadNextQuestion();
             } else {
-                textQuestion.setText("Zbyt mało fiszek w zestawie");
+                textQuestion.setText(R.string.too_few_flashcards);
                 for (Button btn : answerButtons) {
                     btn.setEnabled(false);
                 }
@@ -88,11 +87,11 @@ public class QuizFragment extends Fragment {
                     allCards.size(),
                     System.currentTimeMillis()
             );
-            Executors.newSingleThreadExecutor().execute(() -> {
-                AppDatabase.getInstance(requireContext())
-                        .quizResultDao()
-                        .insert(result);
-            });
+            Executors.newSingleThreadExecutor().execute(() ->
+                    AppDatabase.getInstance(requireContext())
+                            .quizResultDao()
+                            .insert(result)
+            );
 
             // Przejdź do podsumowania
             Bundle bundle = new Bundle();

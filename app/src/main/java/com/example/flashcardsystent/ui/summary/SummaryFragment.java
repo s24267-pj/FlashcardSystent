@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.databinding.FragmentSummaryBinding;
 
 public class SummaryFragment extends Fragment {
@@ -30,25 +31,25 @@ public class SummaryFragment extends Fragment {
         SummaryViewModel viewModel = new ViewModelProvider(this).get(SummaryViewModel.class);
 
         viewModel.totalQuizzes.observe(getViewLifecycleOwner(), count ->
-                binding.textTotalGames.setText("Rozegrane quizy: " + (count != null ? count : 0))
+                binding.textTotalGames.setText(getString(R.string.total_quizzes_with_value, count != null ? count : 0))
         );
 
         viewModel.correctAnswers.observe(getViewLifecycleOwner(), count ->
-                binding.textTotalCorrect.setText("Poprawne odpowiedzi: " + (count != null ? count : 0))
+                binding.textTotalCorrect.setText(getString(R.string.correct_answers_with_value, count != null ? count : 0))
         );
 
         viewModel.wrongAnswers.observe(getViewLifecycleOwner(), count ->
-                binding.textTotalWrong.setText("Błędne odpowiedzi: " + (count != null ? count : 0))
+                binding.textTotalWrong.setText(getString(R.string.wrong_answers_with_value, count != null ? count : 0))
         );
 
         TextView lastScore = binding.textLastScore;
 
         viewModel.lastResult.observe(getViewLifecycleOwner(), result -> {
             if (result != null) {
-                lastScore.setText("Poprawne: " + result.correct +
-                        " / Błędne: " + result.wrong);
+                lastScore.setText(getString(R.string.last_result_summary, result.correct, result.wrong));
+
             } else {
-                lastScore.setText("Brak danych");
+                lastScore.setText(R.string.no_data);
             }
         });
 
@@ -64,6 +65,7 @@ public class SummaryFragment extends Fragment {
         );
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

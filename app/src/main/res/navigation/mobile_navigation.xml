@@ -140,4 +140,30 @@
             android:id="@+id/action_quizSummaryFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
+
+    <fragment
+        android:id="@+id/learningFragment"
+        android:name="com.example.flashcardsystent.ui.learning.ClassicFragment"
+        android:label="Tryb klasyczny"
+        tools:layout="@layout/fragment_learning">
+        <argument
+            android:name="deckId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/classicSetListFragment"
+        android:name="com.example.flashcardsystent.ui.learning.ClassicSetListFragment"
+        android:label="Wybierz zestaw"
+        tools:layout="@layout/fragment_classic_set_list">
+        <action
+            android:id="@+id/action_classicSetListFragment_to_learningFragment"
+            app:destination="@id/learningFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/learningSummaryFragment"
+        android:name="com.example.flashcardsystent.ui.learning.ClassicSummaryFragment"
+        android:label="Koniec nauki"
+        tools:layout="@layout/fragment_learning_summary" />
+
 </navigation>

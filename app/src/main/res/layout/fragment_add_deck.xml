@@ -10,10 +10,12 @@
         android:id="@+id/input_deck_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:hint="Nazwa zestawu"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_save_deck"
