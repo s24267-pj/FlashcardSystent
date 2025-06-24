@@ -49,8 +49,7 @@ public class BrowseCardsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Bundle args = getArguments();
-        deckId = (args != null) ? args.getInt("setId", -1) : -1;
+        deckId = getArguments().getInt("deckId", -1);
         recyclerView = view.findViewById(R.id.browse_recycler);
         finishButton = view.findViewById(R.id.button_finish_browse);
 

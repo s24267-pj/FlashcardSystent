@@ -51,9 +51,7 @@ public class QuizFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle args = getArguments();
-
-        deckId = (args != null) ? args.getInt("setId", -1) : -1;
+        deckId = getArguments().getInt("setId", -1);
         Log.d("QUIZ", "deckId received: " + deckId);
 
         cardViewModel = new ViewModelProvider(requireActivity()).get(CardViewModel.class);

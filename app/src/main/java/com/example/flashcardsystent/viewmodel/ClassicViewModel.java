@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -24,11 +25,15 @@ public class ClassicViewModel extends AndroidViewModel {
         repository = new CardRepository(application);
     }
 
-    public void loadCards(int deckId) {
-        repository.getCardsByDeck(deckId).observeForever(cards -> {
+    public void loadCards(int deckId, LifecycleOwner lifecycleOwner) {
+        repository.getCardsByDeck(deckId).observe(lifecycleOwner, cards -> {
             cardQueue.clear();
-            cardQueue.addAll(cards);
-            showNextCard();
+            if (cards != null && !cards.isEmpty()) {
+                cardQueue.addAll(cards);
+                showNextCard();
+            } else {
+                currentCard.setValue(null);
+            }
         });
     }
 

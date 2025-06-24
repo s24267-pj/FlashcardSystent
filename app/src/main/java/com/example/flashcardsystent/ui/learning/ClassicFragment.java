@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +20,11 @@ import com.example.flashcardsystent.viewmodel.ClassicViewModel;
 public class ClassicFragment extends Fragment {
 
     private ClassicViewModel viewModel;
-    private TextView cardText;
+
+    private TextView frontView;
+    private TextView backView;
+    private View cardContainer;
+    private boolean showingFront = true;
 
     @Nullable
     @Override
@@ -34,36 +39,59 @@ public class ClassicFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        cardText = view.findViewById(R.id.text_card);
+        frontView = view.findViewById(R.id.text_card_front);
+        backView = view.findViewById(R.id.text_card_back);
+        cardContainer = view.findViewById(R.id.card_container);
+
         Button buttonKnow = view.findViewById(R.id.button_know);
         Button buttonDontKnow = view.findViewById(R.id.button_dont_know);
 
-        Bundle args = getArguments();
-
-        int deckId = (args != null) ? args.getInt("setId", -1) : -1;
+        int deckId = getArguments().getInt("deckId", -1);
 
         viewModel = new ViewModelProvider(this).get(ClassicViewModel.class);
-        viewModel.loadCards(deckId);
+        viewModel.loadCards(deckId, getViewLifecycleOwner());
 
         viewModel.getCurrentCard().observe(getViewLifecycleOwner(), card -> {
             if (card == null) {
-                Navigation.findNavController(view).navigate(R.id.learningSummaryFragment);
-
+                Toast.makeText(getContext(), "Brak fiszek w zestawie", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(view).navigateUp();
             } else {
-                cardText.setText(card.front);
-                cardText.setOnClickListener(new View.OnClickListener() {
-                    private boolean isFront = true;
+                frontView.setText(card.front);
+                backView.setText(card.back);
 
-                    @Override
-                    public void onClick(View v) {
-                        isFront = !isFront;
-                        cardText.setText(isFront ? card.front : card.back);
+                frontView.setRotationY(0);
+                backView.setRotationY(0);
+                frontView.setVisibility(View.VISIBLE);
+                backView.setVisibility(View.GONE);
+                showingFront = true;
+
+                cardContainer.setOnClickListener(v -> {
+                    if (showingFront) {
+                        flipCard(frontView, backView);
+                    } else {
+                        flipCard(backView, frontView);
                     }
+                    showingFront = !showingFront;
                 });
             }
         });
 
         buttonKnow.setOnClickListener(v -> viewModel.onKnow());
         buttonDontKnow.setOnClickListener(v -> viewModel.onDontKnow());
+    }
+
+    private void flipCard(View fromView, View toView) {
+        fromView.animate()
+                .rotationY(90)
+                .setDuration(200)
+                .withEndAction(() -> {
+                    fromView.setVisibility(View.GONE);
+                    toView.setRotationY(-90);
+                    toView.setVisibility(View.VISIBLE);
+                    toView.animate()
+                            .rotationY(0)
+                            .setDuration(200)
+                            .start();
+                }).start();
     }
 }
