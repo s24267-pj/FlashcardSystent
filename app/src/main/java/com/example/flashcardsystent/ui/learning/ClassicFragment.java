@@ -24,7 +24,7 @@ public class ClassicFragment extends Fragment {
     private TextView frontView;
     private TextView backView;
     private View cardContainer;
-    private boolean showingFront = true;
+    private boolean previousFlipState = true; // to track flip direction for animation
 
     @Nullable
     @Override
@@ -53,45 +53,52 @@ public class ClassicFragment extends Fragment {
 
         viewModel.getCurrentCard().observe(getViewLifecycleOwner(), card -> {
             if (card == null) {
-                Toast.makeText(getContext(), "Brak fiszek w zestawie", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.no_data), Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(view).navigateUp();
             } else {
                 frontView.setText(card.front);
                 backView.setText(card.back);
-
-                frontView.setRotationY(0);
-                backView.setRotationY(0);
-                frontView.setVisibility(View.VISIBLE);
-                backView.setVisibility(View.GONE);
-                showingFront = true;
-
-                cardContainer.setOnClickListener(v -> {
-                    if (showingFront) {
-                        flipCard(frontView, backView);
-                    } else {
-                        flipCard(backView, frontView);
-                    }
-                    showingFront = !showingFront;
-                });
             }
         });
+
+        viewModel.isShowingFront().observe(getViewLifecycleOwner(), isFront -> {
+            if (isFront == null) return;
+            if (previousFlipState != isFront) {
+                animateFlip(isFront);
+            } else {
+                showFace(isFront);
+            }
+            previousFlipState = isFront;
+        });
+
+        cardContainer.setOnClickListener(v -> viewModel.flipCard());
 
         buttonKnow.setOnClickListener(v -> viewModel.onKnow());
         buttonDontKnow.setOnClickListener(v -> viewModel.onDontKnow());
     }
 
-    private void flipCard(View fromView, View toView) {
-        fromView.animate()
+    private void animateFlip(boolean showFront) {
+        View from = showFront ? backView : frontView;
+        View to = showFront ? frontView : backView;
+
+        from.animate()
                 .rotationY(90)
                 .setDuration(200)
                 .withEndAction(() -> {
-                    fromView.setVisibility(View.GONE);
-                    toView.setRotationY(-90);
-                    toView.setVisibility(View.VISIBLE);
-                    toView.animate()
+                    from.setVisibility(View.GONE);
+                    to.setRotationY(-90);
+                    to.setVisibility(View.VISIBLE);
+                    to.animate()
                             .rotationY(0)
                             .setDuration(200)
                             .start();
                 }).start();
+    }
+
+    private void showFace(boolean showFront) {
+        frontView.setVisibility(showFront ? View.VISIBLE : View.GONE);
+        backView.setVisibility(showFront ? View.GONE : View.VISIBLE);
+        frontView.setRotationY(0);
+        backView.setRotationY(0);
     }
 }
