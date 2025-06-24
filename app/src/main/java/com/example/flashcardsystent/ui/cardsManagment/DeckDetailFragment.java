@@ -60,7 +60,7 @@ public class DeckDetailFragment extends Fragment {
         rv.setAdapter(cardAdapter);
 
         cardViewModel.getCardsByDeck(deckId)
-                .observe(getViewLifecycleOwner(), cardAdapter::setItems);
+                .observe(getViewLifecycleOwner(), cardAdapter::submitList);
 
         ItemTouchHelper.SimpleCallback swipeCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -74,7 +74,7 @@ public class DeckDetailFragment extends Fragment {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
                         int pos = vh.getAdapterPosition();
-                        Card toDelete = cardAdapter.getItem(pos);
+                        Card toDelete = cardAdapter.getItemAt(pos);
                         cardViewModel.delete(toDelete);
                         Toast.makeText(requireContext(),
                                 "Fiszka usunięta",

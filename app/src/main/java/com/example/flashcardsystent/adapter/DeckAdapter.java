@@ -6,20 +6,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Deck;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder> {
+public class DeckAdapter extends ListAdapter<Deck, DeckAdapter.DeckViewHolder> {
 
     private final OnDeckClickListener listener;
-    private List<Deck> deckList = new ArrayList<>();
 
     public DeckAdapter(OnDeckClickListener listener) {
+        super(DIFF_CALLBACK);
         this.listener = listener;
     }
 
@@ -33,7 +31,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull DeckViewHolder holder, int position) {
-        Deck currentDeck = deckList.get(position);
+        Deck currentDeck = getItem(position);
         holder.textViewName.setText(currentDeck.name);
 
         holder.itemView.setOnClickListener(v ->
@@ -46,23 +44,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return deckList.size();
-    }
-
-    public void setDeckList(List<Deck> decks) {
-        this.deckList = decks;
-        notifyDataSetChanged();
+    public Deck getItemAt(int position) {
+        return getItem(position);
     }
 
     public interface OnDeckClickListener {
         void onDeckClick(Deck deck);
-
         void onDeckLongClick(Deck deck);
     }
 
-    static class DeckViewHolder extends RecyclerView.ViewHolder {
+    static class DeckViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
         private final TextView textViewName;
 
         public DeckViewHolder(@NonNull View itemView) {
@@ -70,4 +61,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckViewHolder
             textViewName = itemView.findViewById(R.id.deck_name);
         }
     }
+
+    private static final DiffUtil.ItemCallback<Deck> DIFF_CALLBACK = new DiffUtil.ItemCallback<Deck>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Deck oldItem, @NonNull Deck newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Deck oldItem, @NonNull Deck newItem) {
+            return oldItem.name.equals(newItem.name);
+        }
+    };
 }

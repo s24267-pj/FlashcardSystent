@@ -68,7 +68,7 @@ public class ManagmentFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
         deckViewModel.getAllDecks()
-                .observe(getViewLifecycleOwner(), adapter::setDeckList);
+                .observe(getViewLifecycleOwner(), adapter::submitList);
 
         root.findViewById(R.id.button_add_deck)
                 .setOnClickListener(v ->

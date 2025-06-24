@@ -6,18 +6,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Card;
 
-import java.util.ArrayList;
-import java.util.List;
+public class CardAdapter extends ListAdapter<Card, CardAdapter.CardVH> {
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardVH> {
-    private final List<Card> items = new ArrayList<>();
     private final OnCardClickListener clickListener;
+
     public CardAdapter(OnCardClickListener clickListener) {
+        super(DIFF_CALLBACK);
         this.clickListener = clickListener;
     }
 
@@ -31,28 +32,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardVH> {
 
     @Override
     public void onBindViewHolder(@NonNull CardVH holder, int position) {
-        Card c = items.get(position);
+        Card c = getItem(position);
         holder.front.setText(c.front);
         holder.back.setText(c.back);
 
-        holder.itemView.setOnClickListener(v ->
-                clickListener.onCardClick(c)
-        );
+        holder.itemView.setOnClickListener(v -> clickListener.onCardClick(c));
     }
 
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    public void setItems(List<Card> list) {
-        items.clear();
-        if (list != null) items.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public Card getItem(int position) {
-        return items.get(position);
+    public Card getItemAt(int position) {
+        return getItem(position);
     }
 
     public interface OnCardClickListener {
@@ -68,4 +56,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardVH> {
             back = itemView.findViewById(R.id.text_back);
         }
     }
+
+    private static final DiffUtil.ItemCallback<Card> DIFF_CALLBACK = new DiffUtil.ItemCallback<Card>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
+            return oldItem.front.equals(newItem.front) && oldItem.back.equals(newItem.back);
+        }
+    };
 }
