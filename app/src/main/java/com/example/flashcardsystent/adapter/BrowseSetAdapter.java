@@ -1,50 +1,59 @@
 package com.example.flashcardsystent.adapter;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.flashcardsystent.R;
+import com.example.flashcardsystent.data.Deck;
+
+import java.util.List;
+
 /**
  * Adapter used in browse mode to display available decks.
  * Clicking a deck allows the user to browse its flashcards.
  */
-import android.view.LayoutInflater; // creates View objects from XML layouts
-import android.view.View;   // basic building block for layouts
-import android.view.ViewGroup;  // container for other views
-import android.widget.TextView; // displays text labels
-
-import androidx.annotation.NonNull; // marks parameters that cannot be null
-import androidx.recyclerview.widget.RecyclerView;   // List component optimized for large datasets
-
-import com.example.flashcardsystent.R;  // resource constants
-import com.example.flashcardsystent.data.Deck;  // model representing a flashcard deck
-
-import java.util.List;  // container for deck data
-
 public class BrowseSetAdapter extends RecyclerView.Adapter<BrowseSetAdapter.DeckViewHolder> {
 
-    /** Callback invoked when the user selects a deck from the list. */
+    /**
+     * Callback interface for deck click events.
+     */
     public interface OnDeckClickListener {
+        /**
+         * Called when a deck is clicked.
+         * @param deck the selected deck
+         */
         void onDeckClick(Deck deck);
     }
 
-    /** Decks displayed in the RecyclerView */
+    /** List of decks to display */
     private final List<Deck> decks;
-
-    /** Listener notified of item clicks */
+    /** Listener for item click events */
     private final OnDeckClickListener listener;
 
+    /**
+     * Constructs the adapter.
+     * @param decks list of decks
+     * @param listener click listener for decks
+     */
     public BrowseSetAdapter(List<Deck> decks, OnDeckClickListener listener) {
-        this.decks = decks; // dataset to show
-        this.listener = listener;   // save click handler
+        this.decks = decks;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public DeckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate item layout and create the holder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_deck, parent, false);
         return new DeckViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DeckViewHolder holder, int position) {
-        // Bind deck data and handle clicks
         Deck deck = decks.get(position);
         holder.deckName.setText(deck.name);
         holder.itemView.setOnClickListener(v -> listener.onDeckClick(deck));
@@ -52,15 +61,23 @@ public class BrowseSetAdapter extends RecyclerView.Adapter<BrowseSetAdapter.Deck
 
     @Override
     public int getItemCount() {
-        return decks.size();    // number of decks to show
+        return decks.size();
     }
 
+    /**
+     * ViewHolder representing a single deck item.
+     */
     static class DeckViewHolder extends RecyclerView.ViewHolder {
+        /** TextView displaying the deck name */
         final TextView deckName;
 
+        /**
+         * Constructs the view holder.
+         * @param itemView the view representing the item layout
+         */
         public DeckViewHolder(@NonNull View itemView) {
             super(itemView);
-            deckName = itemView.findViewById(R.id.deck_name);   // label displaying deck name
+            deckName = itemView.findViewById(R.id.deck_name);
         }
     }
 }
