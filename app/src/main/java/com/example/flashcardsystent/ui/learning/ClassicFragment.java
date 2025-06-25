@@ -1,29 +1,51 @@
 package com.example.flashcardsystent.ui.learning;
 
+/**
+ * Fragment implementing the classic flip-card learning mode. Detailed comments
+ * explain the card flipping animation and user interactions.
+ */
+
+// Container for saved instance state
 import android.os.Bundle;
+// Inflates the layout resource file
 import android.view.LayoutInflater;
+// Base class of all visual widgets
 import android.view.View;
+// Layout container for other views
 import android.view.ViewGroup;
+// Widget representing a clickable button
 import android.widget.Button;
+// Text display element
 import android.widget.TextView;
+// Toast for small popup messages
 import android.widget.Toast;
 
+// Annotation for parameters that must not be null
 import androidx.annotation.NonNull;
+// Annotation for parameters that may be null
 import androidx.annotation.Nullable;
+// Basic fragment class
 import androidx.fragment.app.Fragment;
+// Factory for creating ViewModels
 import androidx.lifecycle.ViewModelProvider;
+// Utility class for performing navigation
 import androidx.navigation.Navigation;
 
+// Resource identifiers
 import com.example.flashcardsystent.R;
+// ViewModel containing the learning logic
 import com.example.flashcardsystent.viewmodel.ClassicViewModel;
 
 public class ClassicFragment extends Fragment {
 
+    // ViewModel controlling which card is shown
     private ClassicViewModel viewModel;
 
+    // Views displaying the front and back of the card
     private TextView frontView;
     private TextView backView;
     private View cardContainer;
+    // Tracks whether the front side is currently visible
     private boolean showingFront = true;
 
     @Nullable
@@ -31,6 +53,7 @@ public class ClassicFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // Inflate layout containing card views and buttons
         return inflater.inflate(R.layout.fragment_learning, container, false);
     }
 
@@ -39,18 +62,23 @@ public class ClassicFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Obtain references to UI elements
         frontView = view.findViewById(R.id.text_card_front);
         backView = view.findViewById(R.id.text_card_back);
         cardContainer = view.findViewById(R.id.card_container);
 
+        // Buttons representing whether the user knows the card
         Button buttonKnow = view.findViewById(R.id.button_know);
         Button buttonDontKnow = view.findViewById(R.id.button_dont_know);
 
+        // Retrieve the deck id passed as an argument
         int deckId = getArguments().getInt("deckId", -1);
 
+        // Obtain the ViewModel and load cards for this deck
         viewModel = new ViewModelProvider(this).get(ClassicViewModel.class);
         viewModel.loadCards(deckId, getViewLifecycleOwner());
 
+        // Observe the current card and update the UI whenever it changes
         viewModel.getCurrentCard().observe(getViewLifecycleOwner(), card -> {
             if (card == null) {
                 Toast.makeText(getContext(), "Brak fiszek w zestawie", Toast.LENGTH_SHORT).show();
@@ -65,6 +93,7 @@ public class ClassicFragment extends Fragment {
                 backView.setVisibility(View.GONE);
                 showingFront = true;
 
+                // Flip the card when the container is tapped
                 cardContainer.setOnClickListener(v -> {
                     if (showingFront) {
                         flipCard(frontView, backView);
@@ -76,11 +105,13 @@ public class ClassicFragment extends Fragment {
             }
         });
 
+        // Mark the card as known or unknown when buttons are pressed
         buttonKnow.setOnClickListener(v -> viewModel.onKnow());
         buttonDontKnow.setOnClickListener(v -> viewModel.onDontKnow());
     }
 
     private void flipCard(View fromView, View toView) {
+        // Animate the card flip using a rotation effect
         fromView.animate()
                 .rotationY(90)
                 .setDuration(200)

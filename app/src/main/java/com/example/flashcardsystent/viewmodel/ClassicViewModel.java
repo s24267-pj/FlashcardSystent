@@ -1,28 +1,35 @@
 package com.example.flashcardsystent.viewmodel;
 
-import android.app.Application;
+/**
+ * ViewModel driving the classic flashcard mode where cards are shown sequentially.
+ */
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.app.Application; // needed for AndroidViewModel
 
-import com.example.flashcardsystent.data.Card;
-import com.example.flashcardsystent.data.CardRepository;
+import androidx.annotation.NonNull;          // for constructor
+import androidx.lifecycle.AndroidViewModel;  // Android-specific ViewModel
+import androidx.lifecycle.LifecycleOwner;   // used for observing data
+import androidx.lifecycle.LiveData;        // observable data holder
+import androidx.lifecycle.MutableLiveData; // mutable LiveData
 
-import java.util.LinkedList;
+import com.example.flashcardsystent.data.Card;          // flashcard model
+import com.example.flashcardsystent.data.CardRepository; // repository for cards
+
+import java.util.LinkedList; // simple queue implementation
 import java.util.Queue;
 
 public class ClassicViewModel extends AndroidViewModel {
 
+    /** Repository used to fetch cards */
     private final CardRepository repository;
+    /** Queue of cards to display */
     private final Queue<Card> cardQueue = new LinkedList<>();
+    /** Currently displayed card */
     private final MutableLiveData<Card> currentCard = new MutableLiveData<>();
 
     public ClassicViewModel(@NonNull Application application) {
         super(application);
-        repository = new CardRepository(application);
+        repository = new CardRepository(application); // create repository
     }
 
     public void loadCards(int deckId, LifecycleOwner lifecycleOwner) {
@@ -54,6 +61,6 @@ public class ClassicViewModel extends AndroidViewModel {
     }
 
     public LiveData<Card> getCurrentCard() {
-        return currentCard;
+        return currentCard; // observable current card
     }
 }
