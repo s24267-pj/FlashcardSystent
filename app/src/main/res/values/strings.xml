@@ -13,7 +13,6 @@
     <string name="app_logo">Logo aplikacji</string>
     <string name="mode_classic">Tryb klasyczny</string>
     <string name="mode_quiz">Quiz</string>
-    <string name="mode_typing">Tryb pisania</string>
     <string name="home_description">Wybierz tryb nauki i rozpocznij przygodę z fiszkami!</string>
     <string name="button_browse_mode">Przeglądaj fiszki</string>
     <string name="too_few_flashcards">Zbyt mało fiszek w zestawie</string>

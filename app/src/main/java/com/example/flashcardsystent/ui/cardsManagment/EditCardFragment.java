@@ -49,7 +49,7 @@ public class EditCardFragment extends Fragment {
     // Save button
     Button btnSave;
     // Ids for the card and its deck
-    int cardId, deckId;
+    int cardId;
     // Currently loaded card entity
     private Card currentCard;
 
@@ -70,7 +70,6 @@ public class EditCardFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             cardId = args.getInt("cardId", -1);
-            deckId = args.getInt("deckId", -1);
         }
 
         // Find views defined in the layout
