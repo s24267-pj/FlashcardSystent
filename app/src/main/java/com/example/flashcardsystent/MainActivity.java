@@ -54,15 +54,6 @@ public class MainActivity extends AppCompatActivity {
         // perform navigation actions and query back stack state
         navController = navHostFragment.getNavController();
 
-        // List of destinations that should be considered top level by the
-        // Navigation component. When at one of these screens the back button
-        // should exit the app instead of navigating up the stack.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,   // id for home fragment
-                R.id.navigation_dashboard,  // id for dashboard fragment
-                R.id.navigation_summary     // id for summary fragment
-        ).build();
-
         // Tie the bottom navigation view to the NavController so taps on the
         // menu automatically trigger navigation to the associated destination
         NavigationUI.setupWithNavController(binding.navView, navController);

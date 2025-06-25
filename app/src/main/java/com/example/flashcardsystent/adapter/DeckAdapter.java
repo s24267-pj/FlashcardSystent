@@ -50,10 +50,6 @@ public class DeckAdapter extends ListAdapter<Deck, DeckAdapter.DeckViewHolder> {
         });
     }
 
-    public Deck getItemAt(int position) {
-        return getItem(position); // helper for swipe actions
-    }
-
     /** Callback for deck click and long click events */
     public interface OnDeckClickListener {
         void onDeckClick(Deck deck);

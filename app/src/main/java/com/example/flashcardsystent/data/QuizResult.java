@@ -19,9 +19,10 @@ public class QuizResult {
     final int total;    // total questions
     final long timestamp; // when the quiz was taken
 
-    public QuizResult(int deckId, int correct, int total, long timestamp) {
+    public QuizResult(int deckId, int correct, int wrong, int total, long timestamp) {
         this.deckId = deckId;       // deck identifier
         this.correct = correct;     // number correct
+        this.wrong = wrong;
         this.total = total;         // total questions asked
         this.timestamp = timestamp; // when quiz occurred
     }

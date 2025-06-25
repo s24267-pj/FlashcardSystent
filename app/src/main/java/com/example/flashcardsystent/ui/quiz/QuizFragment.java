@@ -122,9 +122,12 @@ public class QuizFragment extends Fragment {
 
         if (currentIndex >= allCards.size()) {
             // Save the quiz result to the database
+            int wrongCount = allCards.size() - correctCount;
+
             QuizResult result = new QuizResult(
                     deckId,
                     correctCount,
+                    wrongCount,
                     allCards.size(),
                     System.currentTimeMillis()
             );
