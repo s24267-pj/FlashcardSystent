@@ -1,23 +1,33 @@
 package com.example.flashcardsystent.adapter;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.flashcardsystent.R;
+import com.example.flashcardsystent.data.Deck;
+
+import java.util.List;
+
 /**
  * RecyclerView adapter displaying decks when selecting a quiz or learning set.
  */
-
-import android.view.LayoutInflater; // inflate XML into views
-import android.view.View;           // root for each list item
-import android.view.ViewGroup;      // parent for item views
-import android.widget.TextView;     // shows deck names
-import androidx.annotation.NonNull; // support library annotation
-import androidx.recyclerview.widget.RecyclerView; // efficient list component
-
-import com.example.flashcardsystent.R;    // resource access
-import com.example.flashcardsystent.data.Deck; // deck model
-import java.util.List; // list of decks
-
 public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHolder> {
 
+    /**
+     * Listener interface for deck selection events.
+     */
     public interface OnItemClickListener {
+        /**
+         * Called when a deck is clicked.
+         * @param deck the selected deck
+         */
         void onItemClick(Deck deck);
     }
 
@@ -26,9 +36,14 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
     /** Click handler for selecting a deck */
     final OnItemClickListener listener;
 
+    /**
+     * Constructs the adapter.
+     * @param sets the list of decks to show
+     * @param listener the click listener for deck selection
+     */
     public QuizSetAdapter(List<Deck> sets, OnItemClickListener listener) {
-        this.sets = sets;       // list of decks
-        this.listener = listener; // callback for clicks
+        this.sets = sets;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,7 +56,7 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Deck deck = sets.get(position); // deck for row
+        Deck deck = sets.get(position);
         TextView deckName = holder.itemView.findViewById(R.id.deck_name);
         deckName.setText(deck.name);
         holder.itemView.setOnClickListener(v -> listener.onItemClick(deck));
@@ -49,11 +64,17 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return sets.size(); // total decks
+        return sets.size();
     }
 
-    /** ViewHolder for a single deck entry */
+    /**
+     * ViewHolder for a single deck entry.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * Constructs a ViewHolder with the given itemView.
+         * @param itemView the view representing a single deck
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
