@@ -1,24 +1,29 @@
 package com.example.flashcardsystent.data;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+/**
+ * Entity storing the result of a completed quiz.
+ */
+
+import androidx.room.Entity;      // table for quiz results
+import androidx.room.PrimaryKey;  // primary key annotation
 
 @Entity
 public class QuizResult {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true) // unique id for each result
     public int id;
 
-    final int deckId;
-    public final int correct;
+    final int deckId; // related deck
+    public final int correct; // correct answers count
 
-    public int wrong;
-    final int total;
-    final long timestamp;
+    public int wrong;   // incorrect answers count
+    final int total;    // total questions
+    final long timestamp; // when the quiz was taken
 
-    public QuizResult(int deckId, int correct, int total, long timestamp) {
-        this.deckId = deckId;
-        this.correct = correct;
-        this.total = total;
-        this.timestamp = timestamp;
+    public QuizResult(int deckId, int correct, int wrong, int total, long timestamp) {
+        this.deckId = deckId;       // deck identifier
+        this.correct = correct;     // number correct
+        this.wrong = wrong;
+        this.total = total;         // total questions asked
+        this.timestamp = timestamp; // when quiz occurred
     }
 }

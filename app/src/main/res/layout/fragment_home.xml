@@ -34,7 +34,7 @@
         <Button
             android:id="@+id/button_mode_classic"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="145dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/button_primary"
             android:text="@string/mode_classic"
@@ -44,7 +44,7 @@
         <Button
             android:id="@+id/button_quiz_mode"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="145dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/button_secondary"
             android:text="@string/mode_quiz"
@@ -54,20 +54,10 @@
         <Button
             android:id="@+id/button_browse_mode"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="145dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/button_browse"
             android:text="@string/button_browse_mode"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/button_mode_typing"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/button_tertiary"
-            android:text="@string/mode_typing"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 

@@ -1,27 +1,23 @@
 package com.example.flashcardsystent.data;
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
+/**
+ * DAO for quiz result statistics and persistence.
+ */
 
-import java.util.List;
+import androidx.lifecycle.LiveData; // observable query results
+import androidx.room.Dao;            // defines DAO interface
+import androidx.room.Insert;         // insert annotation
+import androidx.room.Query;          // query annotation
+
+import java.util.List; // list container
 
 @Dao
 public interface QuizResultDao {
 
     @Insert
-    void insert(QuizResult result);
+    void insert(QuizResult result); // save a quiz result
 
     @Query("SELECT * FROM QuizResult ORDER BY timestamp DESC")
-    LiveData<List<QuizResult>> getAllResults();
+    LiveData<List<QuizResult>> getAllResults(); // all results newest first
 
-    @Query("SELECT COUNT(*) FROM QuizResult")
-    LiveData<Integer> getTotalQuizCount();
-
-    @Query("SELECT SUM(correct) FROM QuizResult")
-    LiveData<Integer> getTotalCorrectAnswers();
-
-    @Query("SELECT SUM(total - correct) FROM QuizResult")
-    LiveData<Integer> getTotalWrongAnswers();
 }

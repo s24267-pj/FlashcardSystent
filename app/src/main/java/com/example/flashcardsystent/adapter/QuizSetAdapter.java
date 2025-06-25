@@ -1,15 +1,19 @@
 package com.example.flashcardsystent.adapter;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+/**
+ * RecyclerView adapter displaying decks when selecting a quiz or learning set.
+ */
 
-import com.example.flashcardsystent.R;
-import com.example.flashcardsystent.data.Deck;
-import java.util.List;
+import android.view.LayoutInflater; // inflate XML into views
+import android.view.View;           // root for each list item
+import android.view.ViewGroup;      // parent for item views
+import android.widget.TextView;     // shows deck names
+import androidx.annotation.NonNull; // support library annotation
+import androidx.recyclerview.widget.RecyclerView; // efficient list component
+
+import com.example.flashcardsystent.R;    // resource access
+import com.example.flashcardsystent.data.Deck; // deck model
+import java.util.List; // list of decks
 
 public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHolder> {
 
@@ -17,12 +21,14 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
         void onItemClick(Deck deck);
     }
 
+    /** Data set to display */
     final List<Deck> sets;
+    /** Click handler for selecting a deck */
     final OnItemClickListener listener;
 
     public QuizSetAdapter(List<Deck> sets, OnItemClickListener listener) {
-        this.sets = sets;
-        this.listener = listener;
+        this.sets = sets;       // list of decks
+        this.listener = listener; // callback for clicks
     }
 
     @NonNull
@@ -35,7 +41,7 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Deck deck = sets.get(position);
+        Deck deck = sets.get(position); // deck for row
         TextView deckName = holder.itemView.findViewById(R.id.deck_name);
         deckName.setText(deck.name);
         holder.itemView.setOnClickListener(v -> listener.onItemClick(deck));
@@ -43,9 +49,10 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return sets.size();
+        return sets.size(); // total decks
     }
 
+    /** ViewHolder for a single deck entry */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

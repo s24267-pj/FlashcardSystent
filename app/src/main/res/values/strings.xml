@@ -13,7 +13,6 @@
     <string name="app_logo">Logo aplikacji</string>
     <string name="mode_classic">Tryb klasyczny</string>
     <string name="mode_quiz">Quiz</string>
-    <string name="mode_typing">Tryb pisania</string>
     <string name="home_description">Wybierz tryb nauki i rozpocznij przygodę z fiszkami!</string>
     <string name="button_browse_mode">Przeglądaj fiszki</string>
     <string name="too_few_flashcards">Zbyt mało fiszek w zestawie</string>
@@ -32,7 +31,7 @@
     <string name="play_again">Zagraj ponownie</string>
     <string name="go_to_home">Przejdź do ekranu głównego</string>
     <string name="add_deck">Dodaj zestaw</string>
-    <string name="add_flash_cards">Add Flash Cards</string>
+    <string name="add_flash_cards">Dodaj fiszkę</string>
     <string name="definition">Definicja</string>
     <string name="explanation">Wyjaśnienie</string>
     <string name="front">Przód</string>
@@ -49,4 +48,20 @@
     <string name="wrong_answers">Błędne odpowiedzi: 0</string>
     <string name="last_result">Ostatni wynik</string>
     <string name="flashcard">Fiszka</string>
+    <string name="both_fields_required">Oba pola muszą być wypełnione</string>
+    <string name="card_updated">Fiszka zaktualizowana</string>
+    <string name="enter_deck_name">Podaj nazwę zestawu</string>
+    <string name="card_deleted">Fiszka usunięta</string>
+    <string name="rename">Zmień nazwę</string>
+    <string name="delete_deck">Usuń zestaw</string>
+    <string name="confirm_delete_deck">Are you sure you want to delete the deck "%1$s"?</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="deck_deleted">Zestaw usunięty</string>
+    <string name="rename_deck">Zmień nazwę zestawu</string>
+    <string name="name_cannot_be_empty">Nazwa nie może być pusta</string>
+    <string name="deck_renamed_to">Renamed to "%1$s"</string>
+    <string name="cancel">Anuluj</string>
+    <string name="no_flashcard_sets">Brak zestawów fiszek</string>
+    <string name="no_flashcards_in_deck">Brak fiszek w zestawie</string>
 </resources>
