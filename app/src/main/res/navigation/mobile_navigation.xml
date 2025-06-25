@@ -149,6 +149,9 @@
         <argument
             android:name="deckId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_learningFragment_to_learningSummaryFragment"
+            app:destination="@id/learningSummaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/classicSetListFragment"

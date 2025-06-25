@@ -64,4 +64,9 @@
     <string name="cancel">Anuluj</string>
     <string name="no_flashcard_sets">Brak zestawów fiszek</string>
     <string name="no_flashcards_in_deck">Brak fiszek w zestawie</string>
+
+    <string name="total_flashcards_with_value">Liczba fiszek: %1$d</string>
+    <string name="hardest_card_with_value">Najtrudniejsza fiszka: %1$s (%2$d× \"Nie umiem\")</string>
+    <string name="hardest_card_none">Najtrudniejsza fiszka: brak</string>
+    <string name="success_rate_with_value">Skuteczność: %1$d%%</string>
 </resources>

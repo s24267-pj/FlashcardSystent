@@ -33,6 +33,7 @@ import androidx.navigation.Navigation;
 
 // Resource identifiers
 import com.example.flashcardsystent.R;
+import com.example.flashcardsystent.data.Card;
 // ViewModel containing the learning logic
 import com.example.flashcardsystent.viewmodel.ClassicViewModel;
 
@@ -81,8 +82,23 @@ public class ClassicFragment extends Fragment {
         // Observe the current card and update the UI whenever it changes
         viewModel.getCurrentCard().observe(getViewLifecycleOwner(), card -> {
             if (card == null) {
-                Toast.makeText(requireContext(), R.string.no_flashcards_in_deck, Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(view).navigateUp();
+                if (viewModel.getTotalCount() == 0) {
+                    Toast.makeText(requireContext(), R.string.no_flashcards_in_deck, Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(view).navigateUp();
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("totalCount", viewModel.getTotalCount());
+                    Card hardest = viewModel.getMostDifficultCard();
+                    if (hardest != null) {
+                        bundle.putString("hardFront", hardest.front);
+                        bundle.putString("hardBack", hardest.back);
+                        bundle.putInt("hardCount", viewModel.getDontKnowCount(hardest.id));
+                    }
+                    int totalClicks = viewModel.getKnowClicks() + viewModel.getDontKnowClicks();
+                    int rate = totalClicks > 0 ? (int) Math.round(100.0 * viewModel.getKnowClicks() / totalClicks) : 0;
+                    bundle.putInt("successRate", rate);
+                    Navigation.findNavController(view).navigate(R.id.action_learningFragment_to_learningSummaryFragment, bundle);
+                }
             } else {
                 frontView.setText(card.front);
                 backView.setText(card.back);
