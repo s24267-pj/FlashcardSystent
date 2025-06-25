@@ -112,7 +112,7 @@ public class DeckDetailFragment extends Fragment {
                         Card toDelete = cardAdapter.getItemAt(pos);
                         cardViewModel.delete(toDelete);
                         Toast.makeText(requireContext(),
-                                "Fiszka usunięta",
+                                R.string.card_deleted,
                                 Toast.LENGTH_SHORT).show();
                     }
                 };

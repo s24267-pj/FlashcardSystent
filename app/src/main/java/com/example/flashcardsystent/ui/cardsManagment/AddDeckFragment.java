@@ -64,7 +64,7 @@ public class AddDeckFragment extends Fragment {
         saveButton.setOnClickListener(v -> {
             String name = nameInput.getText().toString().trim();
             if (TextUtils.isEmpty(name)) {
-                Toast.makeText(getContext(), "Podaj nazwę zestawu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), R.string.enter_deck_name, Toast.LENGTH_SHORT).show();
             } else {
                 deckViewModel.insert(new Deck(name));
                 Navigation.findNavController(v).popBackStack();

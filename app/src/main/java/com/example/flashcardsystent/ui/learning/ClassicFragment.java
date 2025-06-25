@@ -81,7 +81,7 @@ public class ClassicFragment extends Fragment {
         // Observe the current card and update the UI whenever it changes
         viewModel.getCurrentCard().observe(getViewLifecycleOwner(), card -> {
             if (card == null) {
-                Toast.makeText(getContext(), "Brak fiszek w zestawie", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), R.string.no_flashcards_in_deck, Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(view).navigateUp();
             } else {
                 frontView.setText(card.front);

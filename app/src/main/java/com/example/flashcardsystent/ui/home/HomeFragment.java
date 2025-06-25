@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
         binding.buttonModeClassic.setOnClickListener(v -> {
             deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
                 if (decks == null || decks.isEmpty()) {
-                    Toast.makeText(getContext(), "Brak zestawów fiszek", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.no_flashcard_sets, Toast.LENGTH_SHORT).show();
                 } else {
                     Navigation.findNavController(v).navigate(R.id.classicSetListFragment);
                 }
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
         binding.buttonQuizMode.setOnClickListener(v -> {
             deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
                 if (decks == null || decks.isEmpty()) {
-                    Toast.makeText(getContext(), "Brak zestawów fiszek", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.no_flashcard_sets, Toast.LENGTH_SHORT).show();
                 } else {
                     Navigation.findNavController(v).navigate(R.id.quizSetListFragment);
                 }
@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
         binding.buttonBrowseMode.setOnClickListener(v -> {
             deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
                 if (decks == null || decks.isEmpty()) {
-                    Toast.makeText(getContext(), "Brak zestawów fiszek", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.no_flashcard_sets, Toast.LENGTH_SHORT).show();
                 } else {
                     Navigation.findNavController(v).navigate(R.id.browseSetListFragment);
                 }

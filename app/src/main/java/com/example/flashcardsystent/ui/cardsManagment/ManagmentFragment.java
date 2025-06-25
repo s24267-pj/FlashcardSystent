@@ -76,18 +76,18 @@ public class ManagmentFragment extends Fragment {
                 // Show options to rename or delete the deck
                 new AlertDialog.Builder(requireContext())
                         .setTitle(deck.name)
-                        .setItems(new CharSequence[]{"Zmień nazwę", "Usuń zestaw"}, (dialog, which) -> {
+                        .setItems(new CharSequence[]{getString(R.string.rename), getString(R.string.delete_deck)}, (dialog, which) -> {
                             if (which == 0) {
                                 showRenameDialog(deck);
                             } else {
                                 new AlertDialog.Builder(requireContext())
-                                        .setTitle("Usuń zestaw")
-                                        .setMessage("Czy na pewno chcesz usunąć zestaw \"" + deck.name + "\"?")
-                                        .setPositiveButton("Tak", (d, w) -> {
+                                        .setTitle(getString(R.string.delete_deck))
+                                        .setMessage(getString(R.string.confirm_delete_deck, deck.name))
+                                        .setPositiveButton(R.string.yes, (d, w) -> {
                                             deckViewModel.delete(deck);
-                                            Toast.makeText(getContext(), "Zestaw usunięty", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(requireContext(), R.string.deck_deleted, Toast.LENGTH_SHORT).show();
                                         })
-                                        .setNegativeButton("Nie", null)
+                                        .setNegativeButton(R.string.no, null)
                                         .show();
                             }
                         })
@@ -117,19 +117,19 @@ public class ManagmentFragment extends Fragment {
         input.setText(deck.name);
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("Zmień nazwę zestawu")
+                .setTitle(R.string.rename_deck)
                 .setView(input)
-                .setPositiveButton("Zapisz", (dialog, which) -> {
+                .setPositiveButton(R.string.save, (dialog, which) -> {
                     String newName = input.getText().toString().trim();
                     if (newName.isEmpty()) {
-                        Toast.makeText(getContext(), "Nazwa nie może być pusta", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.name_cannot_be_empty, Toast.LENGTH_SHORT).show();
                     } else {
                         deck.name = newName;
                         deckViewModel.update(deck);
-                        Toast.makeText(getContext(), "Zmieniono nazwę na \"" + newName + "\"", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), getString(R.string.deck_renamed_to, newName), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Anuluj", null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 }

@@ -93,7 +93,7 @@ public class EditCardFragment extends Fragment {
             String newBack = inputBack.getText().toString().trim();
             if (TextUtils.isEmpty(newFront) || TextUtils.isEmpty(newBack)) {
                 Toast.makeText(requireContext(),
-                        "Oba pola muszą być wypełnione",
+                        R.string.both_fields_required,
                         Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -101,7 +101,7 @@ public class EditCardFragment extends Fragment {
             currentCard.back = newBack;
             cardViewModel.update(currentCard);
             Toast.makeText(requireContext(),
-                    "Fiszka zaktualizowana",
+                    R.string.card_updated,
                     Toast.LENGTH_SHORT).show();
             Navigation.findNavController(v).navigateUp();
         });
