@@ -124,6 +124,13 @@ public class ClassicFragment extends Fragment {
         // Mark the card as known or unknown when buttons are pressed
         buttonKnow.setOnClickListener(v -> viewModel.onKnow());
         buttonDontKnow.setOnClickListener(v -> viewModel.onDontKnow());
+
+        viewModel.getFinished().observe(getViewLifecycleOwner(), finished -> {
+            if (Boolean.TRUE.equals(finished)) {
+                viewModel.saveResult(deckId);
+                Navigation.findNavController(view).navigate(R.id.learningSummaryFragment);
+            }
+        });
     }
 
     private void flipCard(View fromView, View toView) {
