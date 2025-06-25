@@ -12,12 +12,12 @@ public class QuizResult {
     @PrimaryKey(autoGenerate = true) // unique id for each result
     public int id;
 
-    final int deckId; // related deck
+    public final int deckId; // related deck
     public final int correct; // correct answers count
 
     public int wrong;   // incorrect answers count
-    final int total;    // total questions
-    final long timestamp; // when the quiz was taken
+    public final int total;    // total questions
+    public final long timestamp; // when the quiz was taken
 
     public QuizResult(int deckId, int correct, int wrong, int total, long timestamp) {
         this.deckId = deckId;       // deck identifier
