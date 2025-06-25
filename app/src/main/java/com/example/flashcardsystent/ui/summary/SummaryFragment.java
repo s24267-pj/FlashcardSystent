@@ -15,9 +15,12 @@ import android.view.View;
 // Group that can contain other views
 import android.view.ViewGroup;
 // Widget used to display text values
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 // Callback interface for intercepting back press events
 import androidx.activity.OnBackPressedCallback;
@@ -33,7 +36,6 @@ import com.example.flashcardsystent.R;
 // Binding class generated from fragment_summary.xml
 import com.example.flashcardsystent.databinding.FragmentSummaryBinding;
 import com.example.flashcardsystent.data.AppDatabase;
-import com.example.flashcardsystent.data.DeckDao;
 
 public class SummaryFragment extends Fragment {
 
@@ -86,21 +88,7 @@ public class SummaryFragment extends Fragment {
                 binding.textTotalClassic.setText(getString(R.string.classic_sessions_with_value, count != null ? count : 0))
         );
 
-        DeckDao deckDao = AppDatabase.getInstance(requireContext()).deckDao();
 
-        viewModel.lastClassic.observe(getViewLifecycleOwner(), result -> {
-            if (result != null) {
-                Executors.newSingleThreadExecutor().execute(() -> {
-                    String name = deckDao.getById(result.deckId).name;
-                    int total = result.correct + result.wrong;
-                    int success = total > 0 ? (result.correct * 100 / total) : 0;
-                    String text = getString(R.string.last_classic_result, name, success, result.hardestCard);
-                    requireActivity().runOnUiThread(() -> binding.textLastClassic.setText(text));
-                });
-            } else {
-                binding.textLastClassic.setText(R.string.no_classic_data);
-            }
-        });
 
         // Disable the system back button on this screen
         requireActivity().getOnBackPressedDispatcher().addCallback(

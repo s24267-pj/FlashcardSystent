@@ -18,6 +18,9 @@ import androidx.lifecycle.LiveData;
 // Utility class for transforming LiveData values
 import androidx.lifecycle.Transformations;
 
+import java.util.HashMap;
+import java.util.Map;
+
 // Singleton entry point to the Room database
 import com.example.flashcardsystent.data.AppDatabase;
 // Entity representing a quiz result row
@@ -41,7 +44,9 @@ public class SummaryViewModel extends AndroidViewModel {
 
     // Classic mode statistics
     public final LiveData<Integer> totalClassic;
-    public final LiveData<ClassicResult> lastClassic;
+
+    // Mapping from deck id to how many classic sessions were played
+    public final LiveData<Map<Integer, Integer>> classicPerDeck;
 
     /**
      * Create the ViewModel and wire LiveData to the underlying database.
@@ -70,9 +75,14 @@ public class SummaryViewModel extends AndroidViewModel {
 
         totalClassic = Transformations.map(classicDao.getAllResults(), list -> list.size());
 
-        lastClassic = Transformations.map(classicDao.getAllResults(), list ->
-                list.isEmpty() ? null : list.get(list.size() - 1)
-        );
+        classicPerDeck = Transformations.map(classicDao.getAllResults(), list -> {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (ClassicResult r : list) {
+                int count = map.getOrDefault(r.deckId, 0) + 1;
+                map.put(r.deckId, count);
+            }
+            return map;
+        });
     }
 
 }

@@ -71,6 +71,4 @@
     <string name="success_rate_with_value">Skuteczność: %1$d%%</string>
 
     <string name="classic_sessions_with_value">Sesje klasyczne: %1$d</string>
-    <string name="no_classic_data">Brak danych z trybu klasycznego</string>
-    <string name="last_classic_result">Zestaw: %1$s, skuteczność: %2$d%%\nNajtrudniejsza: %3$s</string>
 </resources>

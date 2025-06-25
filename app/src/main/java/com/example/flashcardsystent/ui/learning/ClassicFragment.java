@@ -128,7 +128,7 @@ public class ClassicFragment extends Fragment {
         viewModel.getFinished().observe(getViewLifecycleOwner(), finished -> {
             if (Boolean.TRUE.equals(finished)) {
                 viewModel.saveResult(deckId);
-                Navigation.findNavController(view).navigate(R.id.learningSummaryFragment);
+                //Navigation.findNavController(view).navigate(R.id.learningSummaryFragment);
             }
         });
     }
