@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardsystent.R;
@@ -44,6 +46,12 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
         this.listener = listener;
     }
 
+    /**
+     * Creates a new ViewHolder for a deck item.
+     * @param parent the parent ViewGroup
+     * @param viewType the type of the view (not used here)
+     * @return a new ViewHolder instance
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,6 +60,11 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    /**
+     * Binds data to a ViewHolder at the specified position.
+     * @param holder the ViewHolder to bind data to
+     * @param position the position of the item in the data set
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Deck deck = sets.get(position);
@@ -60,6 +73,10 @@ public class QuizSetAdapter extends RecyclerView.Adapter<QuizSetAdapter.ViewHold
         holder.itemView.setOnClickListener(v -> listener.onItemClick(deck));
     }
 
+    /**
+     * Returns the total number of items in the adapter.
+     * @return the item count
+     */
     @Override
     public int getItemCount() {
         return sets.size();
