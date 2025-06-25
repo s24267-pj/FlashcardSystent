@@ -12,7 +12,28 @@
         android:text="@string/learning_session_completed"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/text_total_cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_flashcards_with_value"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/text_hardest_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hardest_card_none"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/text_success_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/success_rate_with_value"
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/button_back_home"
