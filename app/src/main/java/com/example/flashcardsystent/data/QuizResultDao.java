@@ -1,23 +1,32 @@
 package com.example.flashcardsystent.data;
 
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
 /**
- * DAO for quiz result statistics and persistence.
+ * DAO interface for accessing and managing {@link QuizResult} entities.
+ * Provides methods for inserting new results and retrieving quiz history.
  */
-
-import androidx.lifecycle.LiveData; // observable query results
-import androidx.room.Dao;            // defines DAO interface
-import androidx.room.Insert;         // insert annotation
-import androidx.room.Query;          // query annotation
-
-import java.util.List; // list container
-
 @Dao
 public interface QuizResultDao {
 
+    /**
+     * Inserts a new quiz result into the database.
+     *
+     * @param result the quiz result to insert
+     */
     @Insert
-    void insert(QuizResult result); // save a quiz result
+    void insert(QuizResult result);
 
+    /**
+     * Retrieves all quiz results from the database, sorted from newest to oldest.
+     *
+     * @return observable list of quiz results ordered by timestamp descending
+     */
     @Query("SELECT * FROM QuizResult ORDER BY timestamp DESC")
-    LiveData<List<QuizResult>> getAllResults(); // all results newest first
-
+    LiveData<List<QuizResult>> getAllResults();
 }

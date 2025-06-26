@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout shown after completing a classic flashcard session.
+    Displays statistics such as total cards, hardest card, and success rate.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="center"
@@ -6,14 +10,21 @@
     android:layout_height="match_parent"
     android:padding="32dp">
 
+    <!--
+        Header message congratulating the user for finishing the session.
+    -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/learning_session_completed"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp" />
 
+    <!--
+        TextView displaying the total number of flashcards in the session.
+        Uses a formatted string with the actual number.
+    -->
     <TextView
         android:id="@+id/text_total_cards"
         android:layout_width="wrap_content"
@@ -21,6 +32,10 @@
         android:text="@string/total_flashcards_with_value"
         android:layout_marginBottom="8dp" />
 
+    <!--
+        TextView showing the most difficult flashcard (e.g., marked as unknown most often).
+        Displays a placeholder if no card was particularly hard.
+    -->
     <TextView
         android:id="@+id/text_hardest_card"
         android:layout_width="wrap_content"
@@ -28,6 +43,10 @@
         android:text="@string/hardest_card_none"
         android:layout_marginBottom="8dp" />
 
+    <!--
+        TextView showing the user's success rate (known vs unknown).
+        Uses a formatted percentage.
+    -->
     <TextView
         android:id="@+id/text_success_rate"
         android:layout_width="wrap_content"
@@ -35,9 +54,12 @@
         android:text="@string/success_rate_with_value"
         android:layout_marginBottom="24dp" />
 
+    <!--
+        Button to return to the home screen after finishing the summary.
+    -->
     <Button
         android:id="@+id/button_back_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/return_to_home"/>
+        android:text="@string/return_to_home" />
 </LinearLayout>

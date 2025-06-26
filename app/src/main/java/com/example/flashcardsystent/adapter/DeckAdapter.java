@@ -1,25 +1,30 @@
 package com.example.flashcardsystent.adapter;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
+
+import com.example.flashcardsystent.R;
+import com.example.flashcardsystent.data.Deck;
+
 /**
- * Adapter showing user created decks in management screens.
+ * Adapter showing user-created decks in management screens.
+ * Supports click and long-click events for actions like rename or delete.
  */
-
-import android.view.LayoutInflater; // inflates layout resources
-import android.view.View;           // container view type
-import android.view.ViewGroup;      // view group for list items
-import android.widget.TextView;     // displays deck name
-
-import androidx.annotation.NonNull;             // null-safety annotations
-import androidx.recyclerview.widget.DiffUtil;   // calculates list diffs
-import androidx.recyclerview.widget.ListAdapter; // adapter with diffutil support
-
-import com.example.flashcardsystent.R;    // resource constants
-import com.example.flashcardsystent.data.Deck; // deck entity
-
 public class DeckAdapter extends ListAdapter<Deck, DeckAdapter.DeckViewHolder> {
+
     /** Listener for click events on deck items */
     private final OnDeckClickListener listener;
 
+    /**
+     * Constructs a DeckAdapter with the specified click listener.
+     * @param listener callback for deck click and long-click events
+     */
     public DeckAdapter(OnDeckClickListener listener) {
         super(DIFF_CALLBACK); // use diff util for efficient updates
         this.listener = listener;
@@ -50,23 +55,43 @@ public class DeckAdapter extends ListAdapter<Deck, DeckAdapter.DeckViewHolder> {
         });
     }
 
-    /** Callback for deck click and long click events */
+    /**
+     * Callback interface for deck click and long-click events.
+     */
     public interface OnDeckClickListener {
+        /**
+         * Called when a deck is clicked.
+         * @param deck the selected deck
+         */
         void onDeckClick(Deck deck);
+
+        /**
+         * Called when a deck is long-clicked.
+         * @param deck the selected deck
+         */
         void onDeckLongClick(Deck deck);
     }
 
-    /** Holds reference to deck item views */
+    /**
+     * ViewHolder holding references to deck item views.
+     */
     static class DeckViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
+        /** TextView displaying the deck name */
         private final TextView textViewName;
 
+        /**
+         * Constructs the view holder.
+         * @param itemView the deck item view
+         */
         public DeckViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.deck_name); // deck title label
         }
     }
 
-    // DiffUtil callback to detect item changes efficiently
+    /**
+     * DiffUtil callback to detect item changes efficiently.
+     */
     private static final DiffUtil.ItemCallback<Deck> DIFF_CALLBACK = new DiffUtil.ItemCallback<Deck>() {
         @Override
         public boolean areItemsTheSame(@NonNull Deck oldItem, @NonNull Deck newItem) {

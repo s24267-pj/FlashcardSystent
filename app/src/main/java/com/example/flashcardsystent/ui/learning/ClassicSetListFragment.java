@@ -1,70 +1,62 @@
 package com.example.flashcardsystent.ui.learning;
 
-/**
- * Fragment listing decks for the classic learning mode. Tapping a deck starts
- * the card-flipping session.
- */
-
-// Holds any saved state
 import android.os.Bundle;
-// Inflates XML layout resources
 import android.view.LayoutInflater;
-// Base class for UI elements
 import android.view.View;
-// Container for child views
 import android.view.ViewGroup;
 
-// Indicates parameters must not be null
 import androidx.annotation.NonNull;
-// Indicates parameters may be null
 import androidx.annotation.Nullable;
-// Reusable portion of UI
 import androidx.fragment.app.Fragment;
-// Helper for navigating to other fragments
 import androidx.navigation.Navigation;
-// Layout manager displaying list items vertically
 import androidx.recyclerview.widget.LinearLayoutManager;
-// RecyclerView that will hold the deck list
 import androidx.recyclerview.widget.RecyclerView;
 
-// Access to resource identifiers
 import com.example.flashcardsystent.R;
-// Adapter used for both quiz and classic lists
 import com.example.flashcardsystent.adapter.QuizSetAdapter;
-// Entry point to the database
 import com.example.flashcardsystent.data.AppDatabase;
-// Entity representing a deck of flashcards
 import com.example.flashcardsystent.data.Deck;
-// DAO for performing deck queries
 import com.example.flashcardsystent.data.DeckDao;
 
-// List collection interface
 import java.util.List;
-// Executor for running database work off the UI thread
 import java.util.concurrent.Executors;
 
+/**
+ * Fragment displaying a list of available flashcard decks for classic learning mode.
+ * Tapping a deck starts the card-flipping learning session.
+ */
 public class ClassicSetListFragment extends Fragment {
 
-    // Data access object for retrieving decks
+    /** DAO used to load flashcard decks from the database */
     private DeckDao deckDao;
 
+    /**
+     * Inflates the layout for the deck list.
+     *
+     * @param inflater LayoutInflater used to inflate views
+     * @param container Optional parent view
+     * @param savedInstanceState saved state, if any
+     * @return the root view of the fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate layout containing the list of decks
         return inflater.inflate(R.layout.fragment_classic_set_list, container, false);
     }
 
+    /**
+     * Loads decks from the database and displays them in a RecyclerView.
+     *
+     * @param view the fragment’s root view
+     * @param savedInstanceState saved state if any
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Configure RecyclerView
         RecyclerView recycler = view.findViewById(R.id.recycler_classic_sets);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Obtain database DAO on the background thread
         deckDao = AppDatabase.getInstance(requireContext()).deckDao();
 
-        // Load decks off the main thread then update the adapter
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Deck> decks = deckDao.getAll();
             requireActivity().runOnUiThread(() -> {

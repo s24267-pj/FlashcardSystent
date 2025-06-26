@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout used in classic flashcard mode.
+    Displays a card that can be flipped, along with two buttons to mark knowledge level.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -7,6 +11,10 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
+    <!--
+        Card container with rounded corners and no elevation.
+        Displays either the front or back of a flashcard.
+    -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_container"
         android:layout_width="match_parent"
@@ -15,10 +23,17 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp">
 
+        <!--
+            FrameLayout that allows stacking front and back sides of the flashcard.
+        -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!--
+                Front side of the flashcard.
+                Initially visible, shown in blue.
+            -->
             <TextView
                 android:id="@+id/text_card_front"
                 android:layout_width="match_parent"
@@ -29,6 +44,10 @@
                 android:background="@android:color/holo_blue_light"
                 android:textColor="@android:color/white" />
 
+            <!--
+                Back side of the flashcard.
+                Hidden by default, shown in green when flipped.
+            -->
             <TextView
                 android:id="@+id/text_card_back"
                 android:layout_width="match_parent"
@@ -42,16 +61,26 @@
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
+    <!--
+        Button for marking the card as known ("I know").
+        Typically advances to the next flashcard.
+    -->
     <Button
         android:id="@+id/button_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/i_know" />
+        android:text="@string/i_know"
+        android:backgroundTint="@color/knowButtonColor" />
 
+    <!--
+        Button for marking the card as unknown ("I don't know").
+        Usually re-adds the card to the session queue.
+    -->
     <Button
         android:id="@+id/button_dont_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/i_dont_know"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/dontKnowButtonColor" />
 </LinearLayout>

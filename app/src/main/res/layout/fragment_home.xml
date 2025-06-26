@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Home screen layout shown when the app starts.
+    Contains app branding and navigation buttons to launch each learning mode.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_home"
@@ -6,6 +10,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <!--
+        Container layout that vertically stacks logo, title, buttons, and description.
+        Content is horizontally centered and padded for spacing.
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +21,9 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
-        <!-- Logo i tytuł -->
+        <!--
+            App logo displayed at the top of the screen.
+        -->
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
@@ -21,6 +31,9 @@
             android:contentDescription="@string/app_logo"
             android:src="@drawable/flashcardsystent" />
 
+        <!--
+            App name shown as a header below the logo.
+        -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +43,10 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- Tryby gry -->
+        <!--
+            Button for starting the Classic learning mode.
+            Tall button styled with the primary theme color.
+        -->
         <Button
             android:id="@+id/button_mode_classic"
             android:layout_width="match_parent"
@@ -41,6 +57,10 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+        <!--
+            Button for starting the Quiz mode.
+            Uses the secondary accent color.
+        -->
         <Button
             android:id="@+id/button_quiz_mode"
             android:layout_width="match_parent"
@@ -51,6 +71,9 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+        <!--
+            Button for entering Browse mode (free review of cards).
+        -->
         <Button
             android:id="@+id/button_browse_mode"
             android:layout_width="match_parent"
@@ -61,7 +84,9 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
-        <!-- Opis -->
+        <!--
+            Descriptive text at the bottom of the screen explaining app functionality.
+        -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

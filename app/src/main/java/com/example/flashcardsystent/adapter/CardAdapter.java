@@ -1,22 +1,22 @@
 package com.example.flashcardsystent.adapter;
 
-/**
- * RecyclerView adapter that displays flashcards.
- * Javadoc style comments describe the purpose of each component.
- */
-import android.view.LayoutInflater; // creates view objects from XML
-import android.view.View;   // basic building block for layouts
-import android.view.ViewGroup;  // container that holds other views
-import android.widget.TextView; // displays text in the list
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;   // calculates differences between lists
-import androidx.recyclerview.widget.ListAdapter;    // adapter base class with diff support
-import androidx.recyclerview.widget.RecyclerView;   // widget for efficient display of large datasets
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Card;
 
+/**
+ * RecyclerView adapter that displays flashcards.
+ * Javadoc style comments describe the purpose of each component.
+ */
 public class CardAdapter extends ListAdapter<Card, CardAdapter.CardVH> {
 
     /** Listener for card click events */
@@ -34,7 +34,7 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardVH> {
     @NonNull
     @Override
     public CardVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // inflate the layout for each item
+        // Inflate the layout for each item
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_card, parent, false);
         return new CardVH(v);
@@ -42,22 +42,31 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardVH> {
 
     @Override
     public void onBindViewHolder(@NonNull CardVH holder, int position) {
-        Card c = getItem(position); // retrieve card for position
-        holder.front.setText(c.front);  // populate front text
-        holder.back.setText(c.back);    // populate back text
+        Card c = getItem(position); // Retrieve card for position
+        holder.front.setText(c.front);  // Populate front text
+        holder.back.setText(c.back);    // Populate back text
 
-        // forward click events to listener
+        // Forward click events to listener
         holder.itemView.setOnClickListener(v -> clickListener.onCardClick(c));
     }
 
+    /**
+     * Returns the card at the specified adapter position.
+     * @param position the index in the list
+     * @return card at the given position
+     */
     public Card getItemAt(int position) {
-        return getItem(position);   // convenience method used by tests
+        return getItem(position);   // Convenience method used by tests
     }
 
     /**
      * Callback for click events on cards.
      */
     public interface OnCardClickListener {
+        /**
+         * Called when a card is clicked.
+         * @param card the selected card
+         */
         void onCardClick(Card card);
     }
 
@@ -65,16 +74,23 @@ public class CardAdapter extends ListAdapter<Card, CardAdapter.CardVH> {
      * ViewHolder that holds references to the views for a single card item.
      */
     static class CardVH extends RecyclerView.ViewHolder {
-        final TextView front, back; // text views showing front/back of the card
+        /** TextViews showing front and back of the card */
+        final TextView front, back;
 
+        /**
+         * Constructs the ViewHolder.
+         * @param itemView view containing card layout
+         */
         CardVH(@NonNull View itemView) {
-            super(itemView);    // initialize base class
-            front = itemView.findViewById(R.id.text_front); // locate front text
-            back = itemView.findViewById(R.id.text_back);   // locate back text
+            super(itemView);    // Initialize base class
+            front = itemView.findViewById(R.id.text_front); // Locate front text
+            back = itemView.findViewById(R.id.text_back);   // Locate back text
         }
     }
 
-    // DiffUtil callback to optimize list updates
+    /**
+     * DiffUtil callback to optimize list updates.
+     */
     private static final DiffUtil.ItemCallback<Card> DIFF_CALLBACK = new DiffUtil.ItemCallback<Card>() {
         @Override
         public boolean areItemsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {

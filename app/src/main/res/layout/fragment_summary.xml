@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout used for displaying overall user statistics after using the app.
+    Includes quiz and classic mode summaries, plus the last result.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp">
 
+    <!--
+        Vertical container holding all summary statistics.
+        Scrollable in case of overflow on small screens.
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <!--
+            Header title for the statistics summary screen.
+        -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +31,10 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-
+        <!--
+            Card-style box showing statistics for quiz mode.
+            Includes total quizzes, correct answers, and wrong answers.
+        -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,6 +44,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Total quizzes played -->
             <TextView
                 android:id="@+id/text_total_games"
                 android:layout_width="wrap_content"
@@ -39,6 +54,7 @@
                 android:textColor="#000"
                 android:textSize="18sp" />
 
+            <!-- Total correct answers across all quizzes -->
             <TextView
                 android:id="@+id/text_total_correct"
                 android:layout_width="wrap_content"
@@ -48,6 +64,7 @@
                 android:textColor="#4CAF50"
                 android:textSize="18sp" />
 
+            <!-- Total wrong answers across all quizzes -->
             <TextView
                 android:id="@+id/text_total_wrong"
                 android:layout_width="wrap_content"
@@ -55,9 +72,12 @@
                 android:text="@string/wrong_answers"
                 android:textColor="#F44336"
                 android:textSize="18sp" />
-
         </LinearLayout>
 
+        <!--
+            Card-style box showing statistics for classic learning mode.
+            Includes total sessions and a container for per-deck stats.
+        -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,6 +87,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Total classic sessions played -->
             <TextView
                 android:id="@+id/text_total_classic"
                 android:layout_width="wrap_content"
@@ -76,15 +97,17 @@
                 android:textColor="#000"
                 android:textSize="18sp" />
 
-
+            <!-- Container dynamically filled with classic session counts per deck -->
             <LinearLayout
                 android:id="@+id/container_classic_decks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-
         </LinearLayout>
 
+        <!--
+            Section heading for the last recorded quiz result.
+        -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,6 +117,10 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <!--
+            Text showing result of the most recent quiz.
+            Displays number of correct and incorrect answers, or placeholder if none.
+        -->
         <TextView
             android:id="@+id/text_last_score"
             android:layout_width="wrap_content"
@@ -101,7 +128,6 @@
             android:text="@string/no_data"
             android:textColor="#2196F3"
             android:textSize="18sp" />
-
 
     </LinearLayout>
 </ScrollView>

@@ -1,46 +1,62 @@
 package com.example.flashcardsystent.data;
 
+import android.content.Context;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+
 /**
  * Room database singleton used throughout the app.
+ * Holds references to all DAOs and provides a global access point.
  */
-
-import android.content.Context; // application context for DB creation
-import androidx.room.Database;   // Room annotation defining tables
-import androidx.room.Room;       // database builder
-import androidx.room.RoomDatabase; // base class for Room databases
-
-// New entity and DAO for classic learning results
-import com.example.flashcardsystent.data.ClassicResult;
-import com.example.flashcardsystent.data.ClassicResultDao;
-
 @Database(entities = {Deck.class, Card.class, QuizResult.class, ClassicResult.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
 
-    /** Singleton instance of the database */
+    /** Singleton instance of the database. */
     private static AppDatabase INSTANCE;
 
+    /**
+     * Returns DAO for deck entity.
+     * @return DeckDao instance
+     */
     public abstract DeckDao deckDao();
+
+    /**
+     * Returns DAO for card entity.
+     * @return CardDao instance
+     */
     public abstract CardDao cardDao();
 
+    /**
+     * Returns DAO for quiz results.
+     * @return QuizResultDao instance
+     */
     public abstract QuizResultDao quizResultDao();
 
+    /**
+     * Returns DAO for classic learning results.
+     * @return ClassicResultDao instance
+     */
     public abstract ClassicResultDao classicResultDao();
 
     /**
-     * Returns the single database instance creating it if necessary.
+     * Returns the single database instance, creating it if necessary.
+     * Uses application context to prevent memory leaks.
+     *
+     * @param context application context
+     * @return singleton AppDatabase instance
      */
     public static synchronized AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            // create the database with name "flashcards-db"
             INSTANCE = Room.databaseBuilder(
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "flashcards-db"
                     )
-                    .fallbackToDestructiveMigration() // drop tables on incompatible schema
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return INSTANCE;
     }
-
 }

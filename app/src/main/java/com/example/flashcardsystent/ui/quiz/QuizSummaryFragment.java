@@ -1,51 +1,54 @@
 package com.example.flashcardsystent.ui.quiz;
 
-/**
- * Summary fragment shown after finishing a quiz. Displays the score and offers
- * buttons to go home or open statistics.
- */
-
-// Bundle containing saved state data
 import android.os.Bundle;
-// Used to inflate the layout XML
 import android.view.LayoutInflater;
-// Base class of all view objects
 import android.view.View;
-// Parent view that contains other UI elements
 import android.view.ViewGroup;
-// Standard push button widget
 import android.widget.Button;
-// Widget used to display the score
 import android.widget.TextView;
 
-// Annotation marking parameters that must not be null
 import androidx.annotation.NonNull;
-// Annotation marking parameters that may be null
 import androidx.annotation.Nullable;
-// Reusable UI component
 import androidx.fragment.app.Fragment;
-// Utility for performing navigation actions
 import androidx.navigation.Navigation;
 
-// Access to resource identifiers
 import com.example.flashcardsystent.R;
 
+/**
+ * Fragment shown after finishing a quiz session.
+ * Displays the score and provides options to return to home or view statistics.
+ */
 public class QuizSummaryFragment extends Fragment {
 
-    // Number of correctly answered questions
+    /** Number of correctly answered questions */
     private int correctCount;
-    // Total number of questions asked
+
+    /** Total number of questions asked */
     private int totalCount;
 
+    /**
+     * Inflates the layout showing quiz results and navigation buttons.
+     *
+     * @param inflater LayoutInflater used to inflate the fragment's view
+     * @param container Optional parent view container
+     * @param savedInstanceState Previously saved state (if any)
+     * @return the root view of the fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the summary layout showing quiz results
         return inflater.inflate(R.layout.fragment_quiz_summary, container, false);
     }
 
+    /**
+     * Called when the fragment's view is fully created.
+     * Retrieves quiz results from arguments and sets up UI interactions.
+     *
+     * @param view the root view of the fragment
+     * @param savedInstanceState previously saved state (if any)
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Read the score values passed as arguments

@@ -71,4 +71,12 @@
     <string name="success_rate_with_value">Skuteczność: %1$d%%</string>
 
     <string name="classic_sessions_with_value">Sesje klasyczne: %1$d</string>
+    <string name="choose_deck">Wybierz zestaw</string>
+    <string name="classic_mode">Tryb klasyczny</string>
+    <string name="quiz_summary">Podsumowanie quizu</string>
+    <string name="edit_flashcard">Edytuj fiszkę</string>
+    <string name="quiz">Quiz</string>
+    <string name="browse_decks">Przeglądaj zestawy</string>
+    <string name="flashcards">Fiszki</string>
+    <string name="end_of_browsing">Zakończ przeglądanie</string>
 </resources>

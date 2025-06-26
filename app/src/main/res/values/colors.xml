@@ -18,5 +18,8 @@
     <color name="button_browse">#9C27B0</color>
     <color name="colorPrimaryDark">#1565C0</color>
 
+    <color name="knowButtonColor">#4CAF50</color>
+    <color name="dontKnowButtonColor">#FF6F61</color>
+
 
 </resources>

@@ -1,83 +1,81 @@
 package com.example.flashcardsystent.ui.cardsManagment;
 
-/**
- * Fragment used for editing an existing card. Comments have been added to
- * clarify how arguments are read, views are initialized and updates are saved.
- */
-
-// Holds state for fragment recreation
 import android.os.Bundle;
-// Utility class for checking if strings are empty
 import android.text.TextUtils;
-// Converts XML layouts into View objects
 import android.view.LayoutInflater;
-// Basic building block for UI components
 import android.view.View;
-// Container view that holds children
 import android.view.ViewGroup;
-// Tappable button widget
 import android.widget.Button;
-// Text entry field widget
 import android.widget.EditText;
-// Short message popup
 import android.widget.Toast;
 
-// Indicates parameters that must not be null
 import androidx.annotation.NonNull;
-// Indicates parameters that may be null
 import androidx.annotation.Nullable;
-// Portion of UI within an activity
 import androidx.fragment.app.Fragment;
-// Factory for obtaining ViewModel instances
 import androidx.lifecycle.ViewModelProvider;
-// Simplifies fragment navigation
 import androidx.navigation.Navigation;
 
-// Resource identifiers used by the fragment
 import com.example.flashcardsystent.R;
-// Entity representing a flash card
 import com.example.flashcardsystent.data.Card;
-// ViewModel handling card database operations
 import com.example.flashcardsystent.viewmodel.CardViewModel;
 
+/**
+ * Fragment for editing an existing flashcard.
+ * Allows the user to update the front and back text and save changes to the database.
+ */
 public class EditCardFragment extends Fragment {
 
-    // ViewModel used to load and update the card
+    /** ViewModel for accessing and updating card data */
     private CardViewModel cardViewModel;
-    // Text inputs for editing front and back
+
+    /** Input fields for editing front and back of the card */
     private EditText inputFront, inputBack;
-    // Save button
-    Button btnSave;
-    // Ids for the card and its deck
-    int cardId;
-    // Currently loaded card entity
+
+    /** Button that triggers the save operation */
+    private Button btnSave;
+
+    /** ID of the card being edited */
+    private int cardId;
+
+    /** Currently loaded card */
     private Card currentCard;
 
+    /**
+     * Inflates the layout containing input fields and save button.
+     *
+     * @param inflater LayoutInflater to inflate views
+     * @param container Optional parent view
+     * @param savedInstanceState Previously saved state
+     * @return root view of the fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the layout file for editing a card
         return inflater.inflate(R.layout.fragment_edit_card, container, false);
     }
 
+    /**
+     * Initializes the form with the card’s current data and handles save logic.
+     *
+     * @param view the fragment’s root view
+     * @param savedInstanceState previously saved state, if any
+     */
     @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Retrieve arguments specifying which card should be edited
+
         Bundle args = getArguments();
         if (args != null) {
             cardId = args.getInt("cardId", -1);
         }
 
-        // Find views defined in the layout
         inputFront = view.findViewById(R.id.input_front);
         inputBack = view.findViewById(R.id.input_back);
         btnSave = view.findViewById(R.id.button_save_card);
 
-        // Obtain the ViewModel and load the card from the database
         cardViewModel = new ViewModelProvider(this).get(CardViewModel.class);
         cardViewModel.getCardById(cardId)
                 .observe(getViewLifecycleOwner(), card -> {
@@ -87,7 +85,6 @@ public class EditCardFragment extends Fragment {
                     inputBack.setText(card.back);
                 });
 
-        // Validate input and save the updated card when the user taps the button
         btnSave.setOnClickListener(v -> {
             String newFront = inputFront.getText().toString().trim();
             String newBack = inputBack.getText().toString().trim();
