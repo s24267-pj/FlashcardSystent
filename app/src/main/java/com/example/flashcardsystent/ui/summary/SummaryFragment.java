@@ -6,6 +6,7 @@ package com.example.flashcardsystent.ui.summary;
  */
 
 // Container of state information for fragment recreation
+
 import android.os.Bundle;
 // Converts XML layout resources into View objects
 import android.view.LayoutInflater;
@@ -14,7 +15,12 @@ import android.view.View;
 // Group that can contain other views
 import android.view.ViewGroup;
 // Widget used to display text values
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 // Callback interface for intercepting back press events
 import androidx.activity.OnBackPressedCallback;
@@ -29,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.flashcardsystent.R;
 // Binding class generated from fragment_summary.xml
 import com.example.flashcardsystent.databinding.FragmentSummaryBinding;
+import com.example.flashcardsystent.data.AppDatabase;
 
 public class SummaryFragment extends Fragment {
 
@@ -75,6 +82,12 @@ public class SummaryFragment extends Fragment {
                 lastScore.setText(R.string.no_data);
             }
         });
+
+        // Show classic mode statistics
+        viewModel.totalClassic.observe(getViewLifecycleOwner(), count ->
+                binding.textTotalClassic.setText(getString(R.string.classic_sessions_with_value, count != null ? count : 0))
+        );
+
 
 
         // Disable the system back button on this screen

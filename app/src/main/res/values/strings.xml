@@ -69,4 +69,6 @@
     <string name="hardest_card_with_value">Najtrudniejsza fiszka: %1$s (%2$d× \"Nie umiem\")</string>
     <string name="hardest_card_none">Najtrudniejsza fiszka: brak</string>
     <string name="success_rate_with_value">Skuteczność: %1$d%%</string>
+
+    <string name="classic_sessions_with_value">Sesje klasyczne: %1$d</string>
 </resources>

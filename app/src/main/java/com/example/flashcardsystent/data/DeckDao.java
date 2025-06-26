@@ -27,4 +27,8 @@ public interface DeckDao {
     @Query("SELECT * FROM Deck")
     List<Deck> getAll(); // synchronous query
 
+    @Query("SELECT * FROM Deck WHERE id = :id LIMIT 1")
+    Deck getById(int id); // fetch single deck
+
+
 }

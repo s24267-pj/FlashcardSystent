@@ -9,7 +9,11 @@ import androidx.room.Database;   // Room annotation defining tables
 import androidx.room.Room;       // database builder
 import androidx.room.RoomDatabase; // base class for Room databases
 
-@Database(entities = {Deck.class, Card.class, QuizResult.class}, version = 5)
+// New entity and DAO for classic learning results
+import com.example.flashcardsystent.data.ClassicResult;
+import com.example.flashcardsystent.data.ClassicResultDao;
+
+@Database(entities = {Deck.class, Card.class, QuizResult.class, ClassicResult.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
 
     /** Singleton instance of the database */
@@ -19,6 +23,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CardDao cardDao();
 
     public abstract QuizResultDao quizResultDao();
+
+    public abstract ClassicResultDao classicResultDao();
 
     /**
      * Returns the single database instance creating it if necessary.
@@ -31,7 +37,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             AppDatabase.class,
                             "flashcards-db"
                     )
-                    .fallbackToDestructiveMigrationFrom() // drop tables on incompatible schema
+                    .fallbackToDestructiveMigration() // drop tables on incompatible schema
                     .build();
         }
         return INSTANCE;
