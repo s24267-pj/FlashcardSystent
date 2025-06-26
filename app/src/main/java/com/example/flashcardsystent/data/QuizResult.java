@@ -15,7 +15,7 @@ public class QuizResult {
     public int id;
 
     /** ID of the deck that was used in the quiz */
-    final int deckId;
+    public final int deckId;
 
     /** Number of correct answers during the quiz */
     public final int correct;
@@ -24,10 +24,10 @@ public class QuizResult {
     public int wrong;
 
     /** Total number of questions presented in the quiz */
-    final int total;
+    public final int total;
 
     /** Time when the quiz was completed, in milliseconds since epoch */
-    final long timestamp;
+    public final long timestamp;
 
     /**
      * Constructs a new {@code QuizResult} with all statistics and metadata.
