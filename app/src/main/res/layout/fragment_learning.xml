@@ -46,12 +46,14 @@
         android:id="@+id/button_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/i_know" />
+        android:text="@string/i_know"
+        android:backgroundTint="@color/knowButtonColor" />
 
     <Button
         android:id="@+id/button_dont_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/i_dont_know"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/dontKnowButtonColor" />
 </LinearLayout>
