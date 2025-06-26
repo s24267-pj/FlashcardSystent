@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout displayed after completing a quiz session.
+    Shows the result and provides navigation buttons.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,6 +10,10 @@
     android:orientation="vertical"
     android:padding="24dp">
 
+    <!--
+        TextView displaying the user's quiz result (e.g., "7 out of 10 correct").
+        The result is dynamically updated based on passed arguments.
+    -->
     <TextView
         android:id="@+id/text_result"
         android:layout_width="wrap_content"
@@ -14,6 +22,9 @@
         android:textSize="24sp"
         android:layout_marginBottom="24dp" />
 
+    <!--
+        Button that takes the user back to the home screen.
+    -->
     <Button
         android:id="@+id/button_back_home"
         android:layout_width="match_parent"
@@ -21,6 +32,9 @@
         android:text="@string/return_to_home"
         android:layout_marginBottom="12dp" />
 
+    <!--
+        Button that navigates to the statistics summary screen.
+    -->
     <Button
         android:id="@+id/button_view_stats"
         android:layout_width="match_parent"

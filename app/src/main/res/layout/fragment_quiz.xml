@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout used in quiz mode.
+    Displays a single question and four multiple-choice answer buttons.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!--
+        Container layout that vertically stacks the question and answer buttons.
+        Content is centered horizontally and scrollable for small screens.
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <!--
+            TextView displaying the current quiz question.
+        -->
         <TextView
             android:id="@+id/text_question"
             android:layout_width="match_parent"
@@ -19,26 +30,36 @@
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
+        <!--
+            Answer button #1 – user taps this to select the first answer option.
+        -->
         <Button
             style="@style/QuizAnswerButton"
             android:id="@+id/button_answer_1"
             android:text="@string/answer_1" />
 
+        <!--
+            Answer button #2 – second choice.
+        -->
         <Button
             style="@style/QuizAnswerButton"
             android:id="@+id/button_answer_2"
             android:text="@string/answer_2" />
 
+        <!--
+            Answer button #3 – third choice.
+        -->
         <Button
             style="@style/QuizAnswerButton"
             android:id="@+id/button_answer_3"
             android:text="@string/answer_3" />
 
+        <!--
+            Answer button #4 – fourth and final choice.
+        -->
         <Button
             style="@style/QuizAnswerButton"
             android:id="@+id/button_answer_4"
             android:text="@string/answer_4" />
-
-
     </LinearLayout>
 </ScrollView>

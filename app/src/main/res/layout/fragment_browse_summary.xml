@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout displayed after the user finishes browsing all cards in a deck.
+    Shows a message and two buttons: one to repeat the session, and one to return home.
+-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--
+        Inner layout that vertically stacks content.
+        All elements are centered and padded for spacing.
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -9,26 +18,35 @@
         android:gravity="center"
         android:padding="32dp">
 
+        <!--
+            Congratulations message shown after all cards have been viewed.
+        -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ongrats_all_cards_viewed"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="24dp" />
 
+        <!--
+            Button to restart the card browsing session from the beginning.
+        -->
         <Button
             android:id="@+id/button_play_again"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/play_again"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp" />
 
+        <!--
+            Button to return to the home screen of the app.
+        -->
         <Button
             android:id="@+id/button_go_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_to_home"/>
+            android:text="@string/go_to_home" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

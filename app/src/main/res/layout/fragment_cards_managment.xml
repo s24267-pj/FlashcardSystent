@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.cardsManagment.ManagmentFragment">
 
+    <!--
+        RecyclerView displaying a list of existing flashcard decks.
+        Uses LinearLayoutManager for vertical scrolling.
+    -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/deck_list"
         android:layout_width="412dp"
@@ -12,20 +16,24 @@
         android:clipToPadding="false"
         android:padding="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/button_add_deck"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--
+        Button that opens a screen for creating a new deck.
+        Positioned below the list of decks at the bottom of the screen.
+    -->
     <Button
         android:id="@+id/button_add_deck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/add_deck"
+        app:layout_constraintTop_toBottomOf="@id/deck_list"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/deck_list" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
