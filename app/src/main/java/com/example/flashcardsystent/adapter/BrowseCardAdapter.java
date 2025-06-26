@@ -6,13 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcardsystent.R;
 import com.example.flashcardsystent.data.Card;
-import com.example.flashcardsystent.data.Deck;
 
 import java.util.List;
 
