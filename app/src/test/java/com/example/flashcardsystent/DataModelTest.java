@@ -9,14 +9,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Unit tests for simple data model classes.
+ * Unit tests for simple data model classes: {@link Card}, {@link Deck}, and {@link QuizResult}.
+ * <p>
+ * These tests verify that constructors assign values correctly and that default constructors produce expected states.
  */
 public class DataModelTest {
 
-    @Test
     /**
-     * Verifies that the Card constructor properly assigns all fields.
+     * Verifies that the {@link Card} constructor correctly sets the deck ID and front/back values.
      */
+    @Test
     public void cardConstructor_setsValues() {
         Card card = new Card(2, "front", "back");
         assertEquals(2, card.deckId);
@@ -24,31 +26,32 @@ public class DataModelTest {
         assertEquals("back", card.back);
     }
 
-    @Test
     /**
-     * Ensures the QuizResult constructor stores the provided quiz data.
+     * Ensures that the {@link QuizResult} constructor stores all passed values accurately.
      */
+    @Test
     public void quizResultConstructor_initializesFields() {
-        QuizResult result = new QuizResult(1, 5, 10, 100L);
+        QuizResult result = new QuizResult(1, 5, 6, 10, 100L);
         assertEquals(1, result.deckId);
         assertEquals(5, result.correct);
+        assertEquals(6, result.wrong);
         assertEquals(10, result.total);
         assertEquals(100L, result.timestamp);
     }
 
-    @Test
     /**
-     * Confirms that creating a Deck sets the given name.
+     * Confirms that the {@link Deck} constructor properly sets the deck's name.
      */
+    @Test
     public void deckConstructor_setsName() {
         Deck deck = new Deck("Test Deck");
         assertEquals("Test Deck", deck.name);
     }
 
-    @Test
     /**
-     * Checks the default constructor of Card for initial values of fields.
+     * Validates that the default constructor of {@link Card} sets zero/empty values.
      */
+    @Test
     public void cardDefaultConstructor_hasDefaultValues() {
         Card card = new Card();
         assertEquals(0, card.id);
