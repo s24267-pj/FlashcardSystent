@@ -1,48 +1,49 @@
 package com.example.flashcardsystent.ui.learning;
 
-/**
- * Summary screen shown after completing a classic session. Contains a single
- * button that returns to the home screen.
- */
-
-// Saved state bundle
 import android.os.Bundle;
-// Inflates the layout for this fragment
 import android.view.LayoutInflater;
-// Base UI element type
 import android.view.View;
-// Container for other views
 import android.view.ViewGroup;
-// Simple clickable button
 import android.widget.Button;
-// Widget to display summary information
 import android.widget.TextView;
 
-// Annotation for parameters that cannot be null
 import androidx.annotation.NonNull;
-// Annotation for parameters that may be null
 import androidx.annotation.Nullable;
-// Basic fragment
 import androidx.fragment.app.Fragment;
-// Helper for navigating to other fragments
 import androidx.navigation.Navigation;
 
-// Access to resource identifiers
 import com.example.flashcardsystent.R;
 
+/**
+ * Fragment displaying a summary of the classic learning session.
+ * Shows statistics and allows returning to the home screen.
+ */
 public class ClassicSummaryFragment extends Fragment {
 
+    /**
+     * Inflates the layout for the summary screen.
+     *
+     * @param inflater LayoutInflater used to inflate views
+     * @param container Optional parent container
+     * @param savedInstanceState Previously saved state
+     * @return root view of the fragment
+     */
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the layout containing the "home" button
         return inflater.inflate(R.layout.fragment_learning_summary, container, false);
     }
 
+    /**
+     * Populates statistics from arguments and sets up navigation button.
+     *
+     * @param view the root view of the fragment
+     * @param savedInstanceState saved state if any
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Read arguments passed from the learning fragment
         Bundle args = getArguments();
         int total = args != null ? args.getInt("totalCount", 0) : 0;
         String hardFront = args != null ? args.getString("hardFront") : null;
@@ -65,8 +66,9 @@ public class ClassicSummaryFragment extends Fragment {
 
         rateView.setText(getString(R.string.success_rate_with_value, rate));
 
-        // When the user taps the button navigate to the home screen
         Button goHome = view.findViewById(R.id.button_back_home);
-        goHome.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigation_home));
+        goHome.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.navigation_home)
+        );
     }
 }

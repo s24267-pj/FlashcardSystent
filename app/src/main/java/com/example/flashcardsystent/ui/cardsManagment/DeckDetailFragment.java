@@ -1,73 +1,68 @@
 package com.example.flashcardsystent.ui.cardsManagment;
 
-/**
- * Fragment showing details for a specific deck. It lists all cards in the deck
- * and allows users to swipe to delete or tap to edit. Comments describe the
- * setup of the RecyclerView and swipe actions.
- */
-
-// Carries data needed when recreating the fragment
 import android.os.Bundle;
-// Used to inflate XML layout resources
 import android.view.LayoutInflater;
-// Base class for all visual components
 import android.view.View;
-// Container holding child views
 import android.view.ViewGroup;
-// Displays text strings
 import android.widget.TextView;
-// Shows short popup messages
 import android.widget.Toast;
 
-// Parameter cannot be null
 import androidx.annotation.NonNull;
-// Parameter may be null
 import androidx.annotation.Nullable;
-// Portion of UI contained in an activity
 import androidx.fragment.app.Fragment;
-// Factory for ViewModel instances
 import androidx.lifecycle.ViewModelProvider;
-// Utility for navigating between fragments
 import androidx.navigation.Navigation;
-// Adds support for swipe gestures on RecyclerView items
 import androidx.recyclerview.widget.ItemTouchHelper;
-// Positions items in a vertical scrolling list
 import androidx.recyclerview.widget.LinearLayoutManager;
-// RecyclerView displays scrollable lists of items
 import androidx.recyclerview.widget.RecyclerView;
 
-// Resource identifiers from XML
 import com.example.flashcardsystent.R;
-// Adapter used to present cards
 import com.example.flashcardsystent.adapter.CardAdapter;
-// Entity representing a card
 import com.example.flashcardsystent.data.Card;
-// ViewModel providing card database operations
 import com.example.flashcardsystent.viewmodel.CardViewModel;
 
+/**
+ * Fragment displaying all flashcards from a specific deck.
+ * Allows swiping to delete and tapping to edit individual cards.
+ */
 public class DeckDetailFragment extends Fragment {
 
-    // ViewModel for interacting with card data
+    /** ViewModel for managing card data */
     private CardViewModel cardViewModel;
-    // Adapter feeding cards into the RecyclerView
+
+    /** Adapter for displaying the list of cards */
     private CardAdapter cardAdapter;
-    // Identifier of the deck being displayed
+
+    /** ID of the deck being shown */
     private int deckId;
 
+    /**
+     * Inflates the layout for the deck detail screen.
+     *
+     * @param inflater LayoutInflater used to inflate the view
+     * @param container Optional parent view
+     * @param savedInstanceState Previous saved state
+     * @return root view of the fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the deck detail layout
         return inflater.inflate(R.layout.fragment_deck_detail, container, false);
     }
 
+    /**
+     * Called after the view has been created. Sets up RecyclerView, swipe logic,
+     * and button listeners.
+     *
+     * @param view root view of the fragment
+     * @param savedInstanceState previous state if any
+     */
     @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Get arguments specifying which deck to show
         Bundle args = getArguments();
         if (args != null) {
             deckId = args.getInt("deckId");
@@ -75,13 +70,11 @@ public class DeckDetailFragment extends Fragment {
             ((TextView) view.findViewById(R.id.text_deck_name)).setText(deckName);
         }
 
-        // Obtain ViewModel shared with the activity
         cardViewModel = new ViewModelProvider(requireActivity()).get(CardViewModel.class);
-        // Set up RecyclerView to show the list of cards
+
         RecyclerView rv = view.findViewById(R.id.rv_cards);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Handle clicks to edit individual cards
         cardAdapter = new CardAdapter(card -> {
             Bundle bundle = new Bundle();
             bundle.putInt("cardId", card.id);
@@ -91,11 +84,9 @@ public class DeckDetailFragment extends Fragment {
         });
         rv.setAdapter(cardAdapter);
 
-        // Observe the deck's cards and display them
         cardViewModel.getCardsByDeck(deckId)
                 .observe(getViewLifecycleOwner(), cardAdapter::submitList);
 
-        // Allow swiping right to delete a card
         ItemTouchHelper.SimpleCallback swipeCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
                     @Override
@@ -107,7 +98,6 @@ public class DeckDetailFragment extends Fragment {
 
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
-                        // Remove the swiped card from the database
                         int pos = vh.getAdapterPosition();
                         Card toDelete = cardAdapter.getItemAt(pos);
                         cardViewModel.delete(toDelete);
@@ -118,12 +108,10 @@ public class DeckDetailFragment extends Fragment {
                 };
         new ItemTouchHelper(swipeCallback).attachToRecyclerView(rv);
 
-        // Launch the bottom sheet to add new cards to this deck
         view.findViewById(R.id.button_add_cards)
                 .setOnClickListener(v ->
                         AddCardsBottomSheet
                                 .newInstance(deckId)
-                                .show(getChildFragmentManager(), "ADD_CARDS")
-                );
+                                .show(getChildFragmentManager(), "ADD_CARDS"));
     }
 }

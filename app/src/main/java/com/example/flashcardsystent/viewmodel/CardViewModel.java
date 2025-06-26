@@ -1,72 +1,86 @@
 package com.example.flashcardsystent.viewmodel;
 
-/**
- * ViewModel exposing card-related operations to the UI layer. Provides methods
- * for inserting, updating and deleting cards as well as querying them by deck
- * or id.
- */
-
-// Context used by AndroidViewModel subclasses
 import android.app.Application;
 
-// Annotation indicating parameter must be non-null
 import androidx.annotation.NonNull;
-// ViewModel implementation that has access to the Application instance
 import androidx.lifecycle.AndroidViewModel;
-// Lifecycle-aware observable data holder class
 import androidx.lifecycle.LiveData;
 
-// Singleton database that provides DAO instances
 import com.example.flashcardsystent.data.AppDatabase;
-// Data entity representing a flashcard
 import com.example.flashcardsystent.data.Card;
-// Data access object for performing queries on the Card table
 import com.example.flashcardsystent.data.CardDao;
-// Repository that mediates between ViewModel and database
 import com.example.flashcardsystent.data.CardRepository;
 
-import java.util.List; // list of cards
+import java.util.List;
 
+/**
+ * ViewModel exposing card-related operations to the UI layer.
+ * Provides methods for inserting, updating and deleting cards
+ * as well as querying them by deck ID or individual ID.
+ */
 public class CardViewModel extends AndroidViewModel {
+
     /** Repository mediating between DB and UI */
     private final CardRepository repository;
+
     /** DAO used for single card queries */
     private final CardDao cardDao;
 
+    /**
+     * Constructs a CardViewModel and initializes the repository and DAO.
+     *
+     * @param application the application context required by AndroidViewModel
+     */
     public CardViewModel(@NonNull Application application) {
-        // Call into AndroidViewModel to store the Application instance
         super(application);
-
-        // Create repository which will manage async queries
         repository = new CardRepository(application);
-
-        // Obtain a DAO for direct single-card lookups
         cardDao = AppDatabase.getInstance(application).cardDao();
     }
 
+    /**
+     * Returns a list of cards belonging to a specific deck.
+     *
+     * @param deckId the ID of the deck to filter cards by
+     * @return observable list of cards from the deck
+     */
     public LiveData<List<Card>> getCardsByDeck(int deckId) {
-        // Retrieve cards for the specified deck as LiveData so UI can observe
-        // changes
         return repository.getCardsByDeck(deckId);
     }
 
+    /**
+     * Returns a single card by its unique ID.
+     *
+     * @param id the card ID
+     * @return observable card with the given ID
+     */
     public LiveData<Card> getCardById(int id) {
-        // Directly query the DAO for a single card by its id
         return cardDao.getCardById(id);
     }
 
+    /**
+     * Inserts a new card into the database.
+     *
+     * @param card the card to insert
+     */
     public void insert(Card card) {
-        // Delegate insertion to the repository which handles threading
         repository.insert(card);
     }
 
+    /**
+     * Updates an existing card in the database.
+     *
+     * @param card the card with updated values
+     */
     public void update(Card card) {
-        // Update the given card's data in the database
         repository.update(card);
     }
 
+    /**
+     * Deletes a card from the database.
+     *
+     * @param card the card to delete
+     */
     public void delete(Card card) {
-        // Delete the specified card from the database
         repository.delete(card);
     }
 }
