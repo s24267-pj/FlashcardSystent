@@ -33,9 +33,6 @@ import java.util.List;
  */
 public class BrowseCardsFragment extends Fragment {
 
-    /** The ID of the deck currently being browsed */
-    private int deckId;
-
     /** ViewModel used to load cards from the database */
     private CardViewModel cardViewModel;
 
@@ -82,7 +79,8 @@ public class BrowseCardsFragment extends Fragment {
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        deckId = getArguments().getInt("deckId", -1);
+        /** The ID of the deck currently being browsed */
+        int deckId = getArguments().getInt("deckId", -1);
         recyclerView = view.findViewById(R.id.browse_recycler);
         finishButton = view.findViewById(R.id.button_finish_browse);
 

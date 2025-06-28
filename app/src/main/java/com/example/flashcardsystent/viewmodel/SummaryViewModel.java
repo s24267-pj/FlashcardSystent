@@ -14,6 +14,7 @@ import com.example.flashcardsystent.data.QuizResult;
 import com.example.flashcardsystent.data.QuizResultDao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,7 +53,7 @@ public class SummaryViewModel extends AndroidViewModel {
         QuizResultDao dao = db.quizResultDao();
         ClassicResultDao classicDao = db.classicResultDao();
 
-        totalQuizzes = Transformations.map(dao.getAllResults(), list -> list.size());
+        totalQuizzes = Transformations.map(dao.getAllResults(), List::size);
 
         correctAnswers = Transformations.map(dao.getAllResults(),
                 list -> list.stream().mapToInt(r -> r.correct).sum());
@@ -63,7 +64,7 @@ public class SummaryViewModel extends AndroidViewModel {
         lastResult = Transformations.map(dao.getAllResults(), list ->
                 list.isEmpty() ? null : list.get(list.size() - 1));
 
-        totalClassic = Transformations.map(classicDao.getAllResults(), list -> list.size());
+        totalClassic = Transformations.map(classicDao.getAllResults(), List::size);
 
         classicPerDeck = Transformations.map(classicDao.getAllResults(), list -> {
             Map<Integer, Integer> map = new HashMap<>();

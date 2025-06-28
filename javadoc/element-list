@@ -1,0 +1,11 @@
+com.example.flashcardsystent
+com.example.flashcardsystent.adapter
+com.example.flashcardsystent.data
+com.example.flashcardsystent.databinding
+com.example.flashcardsystent.ui.browse
+com.example.flashcardsystent.ui.cardsManagment
+com.example.flashcardsystent.ui.home
+com.example.flashcardsystent.ui.learning
+com.example.flashcardsystent.ui.quiz
+com.example.flashcardsystent.ui.summary
+com.example.flashcardsystent.viewmodel
