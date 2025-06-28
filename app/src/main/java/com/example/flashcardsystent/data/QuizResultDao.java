@@ -1,5 +1,7 @@
+// Pakiet danych – zawiera wszystkie klasy odpowiedzialne za operacje na bazie danych Room
 package com.example.flashcardsystent.data;
 
+// Importy potrzebnych adnotacji i klas Room oraz LiveData do obserwowania danych
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -8,24 +10,30 @@ import androidx.room.Query;
 import java.util.List;
 
 /**
- * DAO interface for accessing and managing {@link QuizResult} entities.
- * Provides methods for inserting new results and retrieving quiz history.
+ * Interfejs DAO (Data Access Object) odpowiedzialny za operacje na wynikach quizów (`QuizResult`).
+ * Room używa tego interfejsu do automatycznego generowania kodu SQL do pracy z bazą danych.
  */
 @Dao
 public interface QuizResultDao {
 
     /**
-     * Inserts a new quiz result into the database.
+     * Wstawia nowy wynik quizu do bazy danych.
+     * Room automatycznie wygeneruje zapytanie SQL typu INSERT.
      *
-     * @param result the quiz result to insert
+     * @param result obiekt `QuizResult`, który ma zostać zapisany
      */
     @Insert
     void insert(QuizResult result);
 
     /**
-     * Retrieves all quiz results from the database, sorted from newest to oldest.
+     * Pobiera wszystkie zapisane wyniki quizów z bazy danych.
+     * Dane są posortowane malejąco według czasu wykonania (`timestamp DESC`),
+     * czyli najnowsze wyniki będą na górze listy.
      *
-     * @return observable list of quiz results ordered by timestamp descending
+     * Zwracany wynik to `LiveData`, czyli dane, które można obserwować z poziomu UI.
+     * Gdy dane się zmienią (np. nowy wynik zostanie dodany), interfejs odświeży się automatycznie.
+     *
+     * @return obserwowalna lista wyników quizów (od najnowszego do najstarszego)
      */
     @Query("SELECT * FROM QuizResult ORDER BY timestamp DESC")
     LiveData<List<QuizResult>> getAllResults();

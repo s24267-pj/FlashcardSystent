@@ -1,5 +1,6 @@
 package com.example.flashcardsystent.ui.home;
 
+// Importujemy klasy potrzebne do działania fragmentu
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,56 +17,51 @@ import com.example.flashcardsystent.databinding.FragmentHomeBinding;
 import com.example.flashcardsystent.viewmodel.DeckViewModel;
 
 /**
- * Fragment representing the home screen.
- * Allows the user to choose between different learning modes (classic, quiz, browse).
+ * Fragment reprezentujący ekran główny aplikacji.
+ * Użytkownik może stąd przejść do jednego z trzech trybów nauki: klasycznego, quizowego lub przeglądania fiszek.
  */
 public class HomeFragment extends Fragment {
 
-    /** View binding for the fragment layout */
+    // Deklaracja zmiennej binding — to specjalny obiekt, który pozwala nam odwoływać się do widoków z layoutu XML bez używania findViewById
     private FragmentHomeBinding binding;
 
-    /** ViewModel providing access to available flashcard decks */
+    // ViewModel to komponent architektury Androida, który przechowuje dane UI (w tym przypadku listę zestawów fiszek)
     private DeckViewModel deckViewModel;
 
-    /**
-     * Inflates the layout using ViewBinding.
-     *
-     * @param inflater  LayoutInflater used to inflate views
-     * @param container Optional parent view
-     * @param savedInstanceState Previously saved state
-     * @return the root view of the fragment
-     */
+    // Metoda onCreateView() tworzy widok fragmentu. To tutaj "dmuchamy" layout XML do obiektów Java
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        // Tworzymy obiekt bindingu na podstawie layoutu fragment_home.xml
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        // Zwracamy główny widok tego fragmentu, czyli korzeń layoutu z XML
         return binding.getRoot();
     }
 
-    /**
-     * Sets up click listeners for navigation to each learning mode.
-     *
-     * @param view the root view of the fragment
-     * @param savedInstanceState saved state, if any
-     */
+    // Metoda wywoływana tuż po utworzeniu widoku. Ustawiamy tutaj kliknięcia przycisków oraz ViewModel
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Tworzymy ViewModel, który ma dostęp do bazy danych z zestawami fiszek. Używamy requireActivity(), bo ViewModel ma działać między fragmentami
         deckViewModel = new ViewModelProvider(requireActivity()).get(DeckViewModel.class);
 
-        // Classic mode button
+        // Obsługa kliknięcia przycisku "Tryb klasyczny"
         binding.buttonModeClassic.setOnClickListener(v ->
+                // Pobieramy wszystkie zestawy fiszek z ViewModelu i obserwujemy wynik
                 deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
+                    // Jeśli lista jest pusta lub null, pokazujemy komunikat Toast (krótkie powiadomienie na dole ekranu)
                     if (decks == null || decks.isEmpty()) {
                         Toast.makeText(getContext(), R.string.no_flashcard_sets, Toast.LENGTH_SHORT).show();
                     } else {
+                        // Jeśli są jakieś zestawy, przechodzimy do ekranu wyboru zestawu dla trybu klasycznego
                         Navigation.findNavController(v).navigate(R.id.classicSetListFragment);
                     }
                 })
         );
 
-        // Quiz mode button
+        // Obsługa kliknięcia przycisku "Tryb quizowy"
         binding.buttonQuizMode.setOnClickListener(v ->
                 deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
                     if (decks == null || decks.isEmpty()) {
@@ -76,7 +72,7 @@ public class HomeFragment extends Fragment {
                 })
         );
 
-        // Browse mode button
+        // Obsługa kliknięcia przycisku "Przeglądanie fiszek"
         binding.buttonBrowseMode.setOnClickListener(v ->
                 deckViewModel.getAllDecks().observe(getViewLifecycleOwner(), decks -> {
                     if (decks == null || decks.isEmpty()) {
@@ -88,12 +84,11 @@ public class HomeFragment extends Fragment {
         );
     }
 
-    /**
-     * Cleans up the binding to avoid memory leaks.
-     */
+    // Metoda onDestroyView() jest wywoływana, gdy fragment jest niszczony i nie potrzebuje już swojego widoku
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        // Zerujemy binding, żeby uniknąć wycieków pamięci (gdyby Android trzymał niepotrzebne referencje do widoków)
         binding = null;
     }
 }

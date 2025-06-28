@@ -1,76 +1,80 @@
 package com.example.flashcardsystent.ui.quiz;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+// Import klas Androida odpowiedzialnych za widok i cykl życia fragmentu
+import android.os.Bundle; // Umożliwia przekazywanie danych między komponentami (np. fragmentami)
+import android.view.LayoutInflater; // Umożliwia "nadmuchiwanie" widoku z XML-a do postaci obiektu View
+import android.view.View; // Klasa bazowa dla wszystkich komponentów UI w Androidzie
+import android.view.ViewGroup; // Kontener do przechowywania widoków w układzie
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
+// Import klas Jetpack (AndroidX) związanych z fragmentami i nawigacją
+import androidx.annotation.NonNull; // Adnotacja wskazująca, że argument/metoda nie może być null
+import androidx.fragment.app.Fragment; // Bazowa klasa dla fragmentu ekranu
+import androidx.navigation.Navigation; // Umożliwia nawigację pomiędzy fragmentami
+import androidx.recyclerview.widget.LinearLayoutManager; // LayoutManager do RecyclerView - układ pionowy listy
 
-import com.example.flashcardsystent.R;
-import com.example.flashcardsystent.adapter.QuizSetAdapter;
-import com.example.flashcardsystent.data.AppDatabase;
-import com.example.flashcardsystent.data.Deck;
-import com.example.flashcardsystent.data.DeckDao;
-import com.example.flashcardsystent.databinding.FragmentQuizSetListBinding;
+// Import własnych klas aplikacji
+import com.example.flashcardsystent.R; // Referencje do zasobów XML (layouty, napisy, kolory itp.)
+import com.example.flashcardsystent.adapter.QuizSetAdapter; // Adapter do wyświetlania listy zestawów w trybie quizu
+import com.example.flashcardsystent.data.AppDatabase; // Singleton bazy danych aplikacji
+import com.example.flashcardsystent.data.Deck; // Klasa modelu reprezentująca zestaw fiszek
+import com.example.flashcardsystent.data.DeckDao; // DAO do obsługi tabeli Deck w Room
+import com.example.flashcardsystent.databinding.FragmentQuizSetListBinding; // ViewBinding do tego fragmentu
 
-import java.util.List;
-import java.util.concurrent.Executors;
+import java.util.List; // Lista kart
+import java.util.concurrent.Executors; // Do uruchamiania zadań w tle (np. zapytań do bazy)
 
 /**
- * Fragment displaying all available decks for quiz mode.
- * Selecting a deck navigates to a multiple-choice quiz.
+ * Fragment wyświetlający listę dostępnych zestawów fiszek do trybu quizu.
+ * Kliknięcie w zestaw rozpoczyna quiz wielokrotnego wyboru.
  */
 public class QuizSetListFragment extends Fragment {
 
-    /** ViewBinding giving access to the layout views */
+    // Obiekt ViewBinding zapewniający dostęp do widoków z layoutu fragmentu
     private FragmentQuizSetListBinding binding;
 
-    /** DAO used to retrieve decks from the database */
+    // DAO do odczytu danych o zestawach z bazy danych
     private DeckDao deckDao;
 
     /**
-     * Inflates the layout and loads the list of quiz decks.
-     *
-     * @param inflater LayoutInflater to inflate views
-     * @param container Optional parent view
-     * @param savedInstanceState Saved state, if any
-     * @return root view of the fragment
+     * Tworzy i zwraca drzewo widoków fragmentu oraz rozpoczyna wczytywanie danych z bazy.
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout and obtain a binding instance
+        // Tworzymy ViewBinding - uzyskujemy dostęp do wszystkich widoków z XML-a
         binding = FragmentQuizSetListBinding.inflate(inflater, container, false);
 
-        // Acquire the DAO from the database
+        // Pobieramy DAO z instancji bazy danych
         AppDatabase db = AppDatabase.getInstance(requireContext());
         deckDao = db.deckDao();
 
-        // Fetch decks and populate the RecyclerView
+        // Wczytujemy zestawy fiszek i wyświetlamy je
         loadDecks();
 
+        // Zwracamy korzeń widoku tego fragmentu
         return binding.getRoot();
     }
 
     /**
-     * Loads decks from the database on a background thread
-     * and populates the RecyclerView adapter on the main thread.
+     * Wczytuje zestawy z bazy w tle i aktualizuje RecyclerView na głównym wątku.
      */
     private void loadDecks() {
+        // Tworzymy osobny wątek do odczytu z bazy (nie można tego robić w głównym wątku)
         Executors.newSingleThreadExecutor().execute(() -> {
-            List<Deck> decks = deckDao.getAll();
+            List<Deck> decks = deckDao.getAll(); // Pobieramy wszystkie zestawy
+
+            // Aktualizujemy UI (RecyclerView) na głównym wątku
             requireActivity().runOnUiThread(() -> {
                 QuizSetAdapter adapter = new QuizSetAdapter(decks, deck -> {
+                    // Po kliknięciu zestawu przechodzimy do quizu
                     Bundle bundle = new Bundle();
                     bundle.putInt("setId", deck.id);
                     Navigation.findNavController(binding.getRoot())
                             .navigate(R.id.action_quizSetListFragment_to_quizFragment, bundle);
                 });
+
+                // Ustawiamy układ listy (RecyclerView) i adapter
                 binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 binding.recyclerView.setAdapter(adapter);
             });

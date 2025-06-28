@@ -1,82 +1,120 @@
+// Deklaracja pakietu (czyli logicznego folderu w projekcie).
+// Kod ten należy do pakietu "adapter", który prawdopodobnie zawiera inne adaptery.
 package com.example.flashcardsystent.adapter;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+// Importy – pozwalają używać klas z innych bibliotek (np. Androida, Javy, czy projektu).
+import android.view.LayoutInflater; // Służy do "nadmuchiwania" layoutu XML do obiektu View.
+import android.view.View;           // Bazowa klasa wszystkich elementów widocznych w Androidzie.
+import android.view.ViewGroup;     // Klasa dla widoków, które mogą zawierać inne widoki (layouty).
+import android.widget.TextView;    // Klasa do wyświetlania tekstu.
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;               // Adnotacja mówiąca, że wartość nie może być null.
+import androidx.recyclerview.widget.RecyclerView; // RecyclerView = lista, która wyświetla dane w sposób wydajny.
 
-import com.example.flashcardsystent.R;
-import com.example.flashcardsystent.data.Deck;
+import com.example.flashcardsystent.R;         // R to automatycznie generowana klasa zawierająca zasoby (layouty, stringi itd.)
+import com.example.flashcardsystent.data.Deck; // Nasza klasa reprezentująca jeden zestaw fiszek.
 
-import java.util.List;
+import java.util.List; // Lista danych – przechowuje wiele obiektów, np. wiele zestawów fiszek.
 
 /**
- * Adapter used in browse mode to display available decks.
- * Clicking a deck allows the user to browse its flashcards.
+ * Adapter odpowiedzialny za wyświetlanie listy dostępnych zestawów (Decks)
+ * w trybie przeglądania.
+ * Użytkownik może kliknąć zestaw, aby zobaczyć jego fiszki.
  */
 public class BrowseSetAdapter extends RecyclerView.Adapter<BrowseSetAdapter.DeckViewHolder> {
 
     /**
-     * Callback interface for deck click events.
+     * Interfejs (czyli "umowa") mówiąca: jeśli ktoś kliknie na zestaw,
+     * to trzeba wykonać metodę `onDeckClick(Deck deck)`.
+     * Można go użyć do poinformowania aktywności lub fragmentu, że coś kliknięto.
      */
     public interface OnDeckClickListener {
         /**
-         * Called when a deck is clicked.
-         * @param deck the selected deck
+         * Ta metoda zostanie wywołana, gdy użytkownik kliknie w zestaw.
+         * @param deck – obiekt reprezentujący kliknięty zestaw.
          */
         void onDeckClick(Deck deck);
     }
 
-    /** List of decks to display */
+    /** Lista zestawów do wyświetlenia w RecyclerView. */
     private final List<Deck> decks;
-    /** Listener for item click events */
+
+    /** Obiekt nasłuchujący kliknięć w zestawy. */
     private final OnDeckClickListener listener;
 
     /**
-     * Constructs the adapter.
-     * @param decks list of decks
-     * @param listener click listener for decks
+     * Konstruktor – czyli metoda tworząca obiekt tego adaptera.
+     * @param decks – lista obiektów Deck (czyli zestawów fiszek).
+     * @param listener – obiekt, który będzie nasłuchiwał kliknięć.
      */
     public BrowseSetAdapter(List<Deck> decks, OnDeckClickListener listener) {
-        this.decks = decks;
-        this.listener = listener;
+        this.decks = decks;       // Przypisujemy listę zestawów do pola klasy
+        this.listener = listener; // Przypisujemy listener do pola klasy
     }
 
+    /**
+     * Metoda wywoływana przez RecyclerView, gdy musi utworzyć nowy widok zestawu.
+     * @param parent – widok nadrzędny (RecyclerView).
+     * @param viewType – typ widoku (tu zawsze jeden, więc ignorowany).
+     * @return nowy obiekt typu DeckViewHolder.
+     */
     @NonNull
     @Override
     public DeckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_deck, parent, false);
+        // Tworzymy obiekt View z layoutu XML o nazwie item_deck.xml
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_deck, parent, false);
+
+        // Tworzymy i zwracamy ViewHoldera – obiekt do obsługi pojedynczego elementu listy
         return new DeckViewHolder(view);
     }
 
+    /**
+     * Metoda przypisująca dane do konkretnego widoku (czyli wypełnia kartę danymi).
+     * @param holder – obiekt widoku pojedynczego zestawu.
+     * @param position – pozycja w liście (np. pierwszy zestaw, drugi, trzeci...).
+     */
     @Override
     public void onBindViewHolder(@NonNull DeckViewHolder holder, int position) {
+        // Pobieramy zestaw z listy po jego pozycji
         Deck deck = decks.get(position);
+
+        // Ustawiamy nazwę zestawu w polu tekstowym
         holder.deckName.setText(deck.name);
-        holder.itemView.setOnClickListener(v -> listener.onDeckClick(deck));
+
+        // Ustawiamy zachowanie po kliknięciu na cały element listy
+        holder.itemView.setOnClickListener(v -> {
+            // Po kliknięciu wywołujemy metodę listenera i przekazujemy mu kliknięty zestaw
+            listener.onDeckClick(deck);
+        });
     }
 
+    /**
+     * Metoda mówi, ile elementów jest w liście.
+     * RecyclerView musi to wiedzieć, żeby odpowiednio narysować widoki.
+     */
     @Override
     public int getItemCount() {
         return decks.size();
     }
 
     /**
-     * ViewHolder representing a single deck item.
+     * Klasa DeckViewHolder – reprezentuje jeden zestaw w liście.
+     * Przechowuje referencję do pola tekstowego (TextView) z nazwą zestawu.
      */
     static class DeckViewHolder extends RecyclerView.ViewHolder {
-        /** TextView displaying the deck name */
+
+        /** Pole tekstowe, w którym pokazujemy nazwę zestawu. */
         final TextView deckName;
 
         /**
-         * Constructs the view holder.
-         * @param itemView the view representing the item layout
+         * Konstruktor widoku pojedynczego zestawu.
+         * @param itemView – widok (layout) jednego elementu listy (czyli jednej "kafelkowej" karty).
          */
         public DeckViewHolder(@NonNull View itemView) {
-            super(itemView);
+            super(itemView); // Wywołanie konstruktora klasy nadrzędnej
+
+            // Szukamy elementu z layoutu o ID "deck_name" – to TextView z nazwą zestawu
             deckName = itemView.findViewById(R.id.deck_name);
         }
     }

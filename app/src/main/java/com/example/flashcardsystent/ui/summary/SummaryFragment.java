@@ -1,106 +1,111 @@
 package com.example.flashcardsystent.ui.summary;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+// Importy Android SDK
+import android.os.Bundle; // Klasa do przekazywania danych między komponentami (np. fragmentami)
+import android.view.LayoutInflater; // Umożliwia "nadmuchiwanie" widoku z XML-a
+import android.view.View; // Bazowa klasa widoku
+import android.view.ViewGroup; // Kontener widoków (np. LinearLayout, FrameLayout)
+import android.widget.TextView; // Klasa do wyświetlania tekstu
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+// Importy z Jetpacka
+import androidx.activity.OnBackPressedCallback; // Umożliwia reagowanie na fizyczny przycisk "wstecz"
+import androidx.annotation.NonNull; // Adnotacja mówiąca, że argument nie może być null
+import androidx.fragment.app.Fragment; // Bazowa klasa fragmentów
+import androidx.lifecycle.ViewModelProvider; // Umożliwia tworzenie i udostępnianie ViewModeli
 
-import com.example.flashcardsystent.R;
-import com.example.flashcardsystent.databinding.FragmentSummaryBinding;
-import com.example.flashcardsystent.viewmodel.SummaryViewModel;
+// Import zasobów i klas aplikacji
+import com.example.flashcardsystent.R; // Dostęp do zasobów aplikacji (np. tekstów, layoutów)
+import com.example.flashcardsystent.databinding.FragmentSummaryBinding; // ViewBinding - bezpieczny dostęp do widoków
+import com.example.flashcardsystent.viewmodel.SummaryViewModel; // ViewModel do zarządzania danymi statystyk
 
 /**
- * Fragment presenting statistics about completed quizzes and classic sessions.
- * Shows total games, answers, and the result of the most recent quiz.
+ * Fragment prezentujący statystyki ukończonych quizów i klasycznych sesji nauki.
+ * Pokazuje liczbę gier, poprawnych i błędnych odpowiedzi oraz wynik ostatniego quizu.
  */
 public class SummaryFragment extends Fragment {
 
-    /** Holds references to the views defined in the layout using ViewBinding */
+    // Obiekt ViewBinding dający bezpieczny dostęp do widoków z layoutu
     private FragmentSummaryBinding binding;
 
     /**
-     * Inflates the layout for the statistics summary screen.
+     * Tworzy widok ekranu podsumowania statystyk.
      *
-     * @param inflater LayoutInflater used to inflate views
-     * @param container Optional parent container
-     * @param savedInstanceState Previously saved state (if any)
-     * @return the root view of the fragment
+     * @param inflater LayoutInflater do tworzenia widoków z XML-a
+     * @param container Kontener, do którego widok może zostać dołączony (opcjonalnie)
+     * @param savedInstanceState Stan zapisany wcześniej (np. po obrocie ekranu)
+     * @return Główny widok fragmentu
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout with ViewBinding for type-safe access to views
+        // Inicjalizacja ViewBinding do obsługi widoków
         binding = FragmentSummaryBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     /**
-     * Called when the view has been created. Sets up observers and disables back navigation.
+     * Metoda wywoływana po utworzeniu widoku. Ustawia obserwatorów i blokuje przycisk "wstecz".
      *
-     * @param view root view of the fragment
-     * @param savedInstanceState previously saved state (if any)
+     * @param view Główny widok fragmentu
+     * @param savedInstanceState Zapisany stan (jeśli istniał)
      */
     @Override
     public void onViewCreated(@NonNull View view,
                               Bundle savedInstanceState) {
 
-        // Obtain a ViewModel used to load quiz and classic statistics
+        // Pobranie ViewModelu do ładowania statystyk quizu i klasycznych sesji
         SummaryViewModel viewModel = new ViewModelProvider(this).get(SummaryViewModel.class);
 
-        // Update quiz summary statistics
+        // Obserwacja liczby rozegranych quizów
         viewModel.totalQuizzes.observe(getViewLifecycleOwner(), count ->
                 binding.textTotalGames.setText(
                         getString(R.string.total_quizzes_with_value, count != null ? count : 0))
         );
 
+        // Obserwacja liczby poprawnych odpowiedzi
         viewModel.correctAnswers.observe(getViewLifecycleOwner(), count ->
                 binding.textTotalCorrect.setText(
                         getString(R.string.correct_answers_with_value, count != null ? count : 0))
         );
 
+        // Obserwacja liczby błędnych odpowiedzi
         viewModel.wrongAnswers.observe(getViewLifecycleOwner(), count ->
                 binding.textTotalWrong.setText(
                         getString(R.string.wrong_answers_with_value, count != null ? count : 0))
         );
 
-        // Show last result or placeholder
+        // Obserwacja ostatniego wyniku lub placeholdera jeśli brak danych
         TextView lastScore = binding.textLastScore;
         viewModel.lastResult.observe(getViewLifecycleOwner(), result -> {
             if (result != null) {
                 lastScore.setText(
                         getString(R.string.last_result_summary, result.correct, result.wrong));
             } else {
-                lastScore.setText(R.string.no_data);
+                lastScore.setText(R.string.no_data); // Tekst zastępczy, gdy brak danych
             }
         });
 
-        // Show total number of classic sessions
+        // Obserwacja liczby klasycznych sesji nauki
         viewModel.totalClassic.observe(getViewLifecycleOwner(), count ->
                 binding.textTotalClassic.setText(
                         getString(R.string.classic_sessions_with_value, count != null ? count : 0))
         );
 
-        // Disable the system back button on this screen
+        // Blokowanie przycisku "wstecz" na tym ekranie
         requireActivity().getOnBackPressedDispatcher().addCallback(
                 getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        // Do nothing to block back navigation
+                        // Brak działania - użytkownik nie może wrócić wstecz
                     }
                 }
         );
     }
 
     /**
-     * Called when the view is being destroyed. Cleans up ViewBinding reference.
+     * Sprzątanie po zniszczeniu widoku. Usuwamy referencję do ViewBinding.
      */
     @Override
     public void onDestroyView() {

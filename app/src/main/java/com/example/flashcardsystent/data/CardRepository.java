@@ -1,5 +1,7 @@
+// Pakiet danych – zawiera repozytoria, DAO i modele powiązane z bazą danych
 package com.example.flashcardsystent.data;
 
+// Importy potrzebne do działania repozytorium
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
@@ -9,59 +11,74 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Repository providing asynchronous access to {@link Card} data.
- * Acts as an abstraction layer between the database and the ViewModel.
+ * Klasa `CardRepository` pełni rolę pośrednika (warstwy pośredniej) pomiędzy bazą danych
+ * a ViewModelem lub UI. Umożliwia bezpieczny, asynchroniczny dostęp do danych fiszek.
+ *
+ * Jest to część tzw. architektury MVVM – Model-View-ViewModel.
  */
 public class CardRepository {
 
-    /** DAO providing access to the database operations for cards */
+    /**
+     * Obiekt DAO odpowiedzialny za bezpośredni dostęp do danych fiszek w bazie danych.
+     * Zawiera metody takie jak insert, update, delete, query...
+     */
     private final CardDao cardDao;
 
-    /** Executor used to run database operations on a background thread */
+    /**
+     * ExecutorService to narzędzie służące do wykonywania zadań w tle (na osobnym wątku).
+     * W tym przypadku – do wykonywania operacji na bazie danych poza głównym wątkiem UI.
+     * Używamy `singleThreadExecutor()`, co oznacza jeden wątek roboczy w tle.
+     */
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     /**
-     * Constructs a new CardRepository.
+     * Konstruktor repozytorium – tworzy dostęp do bazy danych na podstawie kontekstu aplikacji.
+     * Dzięki temu unika się wycieków pamięci (bo nie używa się kontekstu Activity).
      *
-     * @param app the application context, required to initialize the database
+     * @param app obiekt aplikacji – wykorzystywany do zainicjowania bazy danych
      */
     public CardRepository(Application app) {
+        // Pobieramy instancję bazy danych
         AppDatabase db = AppDatabase.getInstance(app);
+
+        // Z tej instancji pobieramy DAO do fiszek
         cardDao = db.cardDao();
     }
 
     /**
-     * Returns all cards that belong to a specified deck.
+     * Zwraca obserwowalną listę fiszek przypisanych do danego zestawu (deckId).
+     * `LiveData` pozwala komponentom UI reagować automatycznie na zmiany danych.
      *
-     * @param deckId the ID of the deck
-     * @return LiveData list of cards in that deck
+     * @param deckId identyfikator zestawu, którego fiszki chcemy pobrać
+     * @return LiveData z listą fiszek z danego zestawu
      */
     public LiveData<List<Card>> getCardsByDeck(int deckId) {
         return cardDao.getCardsByDeck(deckId);
     }
 
     /**
-     * Inserts a card into the database asynchronously.
+     * Wstawia fiszkę do bazy danych, wykonując operację w tle.
+     * Dzięki temu nie blokujemy głównego wątku aplikacji (czyli UI).
      *
-     * @param card the card to insert
+     * @param card obiekt fiszki do dodania
      */
     public void insert(Card card) {
         executor.execute(() -> cardDao.insert(card));
     }
 
     /**
-     * Updates a card in the database asynchronously.
+     * Aktualizuje dane fiszki w bazie, również w tle.
      *
-     * @param card the card with updated data
+     * @param card obiekt fiszki zawierający zaktualizowane dane
      */
     public void update(Card card) {
         executor.execute(() -> cardDao.update(card));
     }
 
     /**
-     * Deletes a card from the database asynchronously.
+     * Usuwa wskazaną fiszkę z bazy danych w tle.
      *
-     * @param card the card to delete
+     * @param card obiekt fiszki do usunięcia
      */
     public void delete(Card card) {
         executor.execute(() -> cardDao.delete(card));

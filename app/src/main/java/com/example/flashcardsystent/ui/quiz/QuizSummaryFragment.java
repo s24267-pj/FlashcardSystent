@@ -1,38 +1,41 @@
 package com.example.flashcardsystent.ui.quiz;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+// Importy Android SDK
+import android.os.Bundle; // Klasa do przekazywania danych między komponentami
+import android.view.LayoutInflater; // Umożliwia "nadmuchiwanie" widoku z XML-a
+import android.view.View; // Klasa bazowa każdego widoku na ekranie
+import android.view.ViewGroup; // Kontener widoków (np. LinearLayout, FrameLayout)
+import android.widget.Button; // Klasa przycisku
+import android.widget.TextView; // Klasa tekstu
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+// Importy z Jetpacka
+import androidx.annotation.NonNull; // Adnotacja mówiąca, że parametr nie może być null
+import androidx.annotation.Nullable; // Adnotacja mówiąca, że parametr może być null
+import androidx.fragment.app.Fragment; // Bazowa klasa fragmentów
+import androidx.navigation.Navigation; // Umożliwia nawigację między fragmentami
 
-import com.example.flashcardsystent.R;
+// Import zasobów aplikacji
+import com.example.flashcardsystent.R; // Dostęp do zasobów takich jak teksty i identyfikatory widoków
 
 /**
- * Fragment shown after finishing a quiz session.
- * Displays the score and provides options to return to home or view statistics.
+ * Fragment wyświetlany po zakończeniu quizu.
+ * Pokazuje wynik i daje użytkownikowi możliwość powrotu do ekranu głównego lub przejścia do statystyk.
  */
 public class QuizSummaryFragment extends Fragment {
 
-    /** Number of correctly answered questions */
+    // Liczba poprawnych odpowiedzi udzielonych przez użytkownika
     private int correctCount;
 
-    /** Total number of questions asked */
+    // Całkowita liczba pytań w quizie
     private int totalCount;
 
     /**
-     * Inflates the layout showing quiz results and navigation buttons.
+     * Tworzy i zwraca widok fragmentu z pliku XML fragment_quiz_summary.xml
      *
-     * @param inflater LayoutInflater used to inflate the fragment's view
-     * @param container Optional parent view container
-     * @param savedInstanceState Previously saved state (if any)
-     * @return the root view of the fragment
+     * @param inflater Obiekt do tworzenia widoków z XML-a
+     * @param container Rodzic (może być null), do którego fragment może zostać dołączony
+     * @param savedInstanceState Stan zapisany wcześniej (np. przy rotacji ekranu)
+     * @return Główny widok fragmentu
      */
     @Nullable
     @Override
@@ -43,41 +46,41 @@ public class QuizSummaryFragment extends Fragment {
     }
 
     /**
-     * Called when the fragment's view is fully created.
-     * Retrieves quiz results from arguments and sets up UI interactions.
+     * Wywoływana po tym, jak widok został już utworzony.
+     * Odczytuje dane z argumentów i ustawia interakcje dla przycisków.
      *
-     * @param view the root view of the fragment
-     * @param savedInstanceState previously saved state (if any)
+     * @param view Główny widok fragmentu
+     * @param savedInstanceState Zapisany stan, jeśli fragment był wcześniej zniszczony
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Read the score values passed as arguments
+        // Pobieramy argumenty przekazane do fragmentu (wyniki quizu)
         Bundle args = getArguments();
         if (args != null) {
-            correctCount = args.getInt("correctCount", 0);
-            totalCount = args.getInt("totalCount", 0);
+            correctCount = args.getInt("correctCount", 0); // liczba poprawnych odpowiedzi
+            totalCount = args.getInt("totalCount", 0); // liczba wszystkich pytań
         }
 
-        // Grab references to the views
-        TextView resultText = view.findViewById(R.id.text_result);
-        Button buttonBack = view.findViewById(R.id.button_back_home);
-        Button buttonStats = view.findViewById(R.id.button_view_stats);
+        // Pobieramy referencje do elementów interfejsu
+        TextView resultText = view.findViewById(R.id.text_result); // tekst z wynikiem
+        Button buttonBack = view.findViewById(R.id.button_back_home); // przycisk powrotu do ekranu głównego
+        Button buttonStats = view.findViewById(R.id.button_view_stats); // przycisk przejścia do statystyk
 
-        // Show the formatted score
+        // Ustawiamy sformatowany tekst z wynikiem quizu, np. "Wynik: 7/10"
         resultText.setText(getString(R.string.quiz_result_summary, correctCount, totalCount));
 
-        // Navigate straight back to home
+        // Po kliknięciu: wróć do ekranu głównego
         buttonBack.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_home)
         );
 
-        // Open the statistics tab, clearing intermediate destinations
+        // Po kliknięciu: przejdź do panelu statystyk, usuwając z historii wszystkie wcześniejsze ekrany
         buttonStats.setOnClickListener(v -> Navigation.findNavController(v).navigate(
-                R.id.navigation_summary,
-                null,
+                R.id.navigation_summary, // ID miejsca docelowego (fragment z podsumowaniem)
+                null, // brak dodatkowych danych
                 new androidx.navigation.NavOptions.Builder()
-                        .setPopUpTo(R.id.navigation_home, true) // pop back to home
-                        .setLaunchSingleTop(true)
+                        .setPopUpTo(R.id.navigation_home, true) // usuń wszystko aż do ekranu głównego
+                        .setLaunchSingleTop(true) // jeśli już jesteś na ekranie docelowym, nie twórz nowego
                         .build()
         ));
     }

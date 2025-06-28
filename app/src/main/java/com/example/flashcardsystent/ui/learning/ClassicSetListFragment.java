@@ -1,5 +1,6 @@
 package com.example.flashcardsystent.ui.learning;
 
+// Importujemy wszystkie potrzebne klasy
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,49 +23,57 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 /**
- * Fragment displaying a list of available flashcard decks for classic learning mode.
- * Tapping a deck starts the card-flipping learning session.
+ * Fragment wyświetlający listę dostępnych zestawów fiszek do trybu klasycznego.
+ * Kliknięcie w zestaw rozpoczyna sesję nauki z kartami.
  */
 public class ClassicSetListFragment extends Fragment {
 
-    /** DAO used to load flashcard decks from the database */
+    // DAO służące do pobierania danych o zestawach z lokalnej bazy danych Room
     private DeckDao deckDao;
 
     /**
-     * Inflates the layout for the deck list.
-     *
-     * @param inflater LayoutInflater used to inflate views
-     * @param container Optional parent view
-     * @param savedInstanceState saved state, if any
-     * @return the root view of the fragment
+     * Metoda tworzy ("dmucha") widok layoutu XML i zwraca jego korzeń.
+     * To tutaj ładowany jest plik fragment_classic_set_list.xml jako interfejs graficzny tego fragmentu.
      */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Rozdmuchujemy layout XML na obiekt View
         return inflater.inflate(R.layout.fragment_classic_set_list, container, false);
     }
 
     /**
-     * Loads decks from the database and displays them in a RecyclerView.
-     *
-     * @param view the fragment’s root view
-     * @param savedInstanceState saved state if any
+     * Metoda wywoływana po utworzeniu widoku. Tutaj konfigurujemy RecyclerView i pobieramy dane z bazy.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        // Znajdujemy RecyclerView (lista przewijana) w layoucie
         RecyclerView recycler = view.findViewById(R.id.recycler_classic_sets);
+
+        // Ustawiamy sposób układania elementów w RecyclerView — w pionie, jeden pod drugim
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        // Pobieramy DAO (interfejs dostępu do bazy) z singletona AppDatabase
         deckDao = AppDatabase.getInstance(requireContext()).deckDao();
 
+        // Uruchamiamy zadanie w osobnym wątku, by nie blokować głównego wątku aplikacji
         Executors.newSingleThreadExecutor().execute(() -> {
+            // Pobieramy wszystkie zestawy fiszek z bazy danych
             List<Deck> decks = deckDao.getAll();
+
+            // Po zakończeniu operacji na tle, wracamy na główny wątek, by zmodyfikować UI
             requireActivity().runOnUiThread(() -> {
+                // Tworzymy adapter i przekazujemy listę zestawów oraz akcję po kliknięciu
                 QuizSetAdapter adapter = new QuizSetAdapter(decks, deck -> {
+                    // Tworzymy Bundle (dodatkowe dane do przekazania między fragmentami)
                     Bundle bundle = new Bundle();
-                    bundle.putInt("deckId", deck.id);
+                    bundle.putInt("deckId", deck.id); // Przekazujemy ID wybranego zestawu
+
+                    // Przechodzimy do fragmentu nauki (ClassicFragment), przekazując bundle
                     Navigation.findNavController(view).navigate(R.id.learningFragment, bundle);
                 });
+
+                // Ustawiamy adapter w RecyclerView, co sprawia, że lista zaczyna działać i wyświetla dane
                 recycler.setAdapter(adapter);
             });
         });

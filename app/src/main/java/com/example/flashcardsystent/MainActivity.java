@@ -1,49 +1,53 @@
 package com.example.flashcardsystent;
 
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
+// Importy Android SDK
+import android.os.Bundle; // Klasa służąca do przekazywania danych pomiędzy komponentami (np. przy obrotach ekranu)
 
-import com.example.flashcardsystent.databinding.ActivityMainBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+// Importy z Android Jetpack
+import androidx.appcompat.app.AppCompatActivity; // Bazowa klasa aktywności z paskiem akcji
+import androidx.navigation.NavController; // Kontroler zarządzający nawigacją między fragmentami
+import androidx.navigation.fragment.NavHostFragment; // Fragment przechowujący hosta nawigacji
+import androidx.navigation.ui.NavigationUI; // Klasa ułatwiająca integrację elementów UI z kontrolerem nawigacji
+
+// Importy aplikacji i bibliotek UI
+import com.example.flashcardsystent.databinding.ActivityMainBinding; // ViewBinding - dostęp do widoków z layoutu
+import com.google.android.material.bottomnavigation.BottomNavigationView; // Dolne menu nawigacyjne (BottomNavigation)
 
 /**
- * Main activity hosting the navigation container for the application.
- * Handles setup of the navigation graph and bottom navigation bar.
+ * Główna aktywność, która hostuje kontener nawigacyjny aplikacji.
+ * Odpowiada za konfigurację nawigacji oraz dolnego paska menu.
  */
 public class MainActivity extends AppCompatActivity {
 
-    /** Binding object for accessing views defined in activity_main.xml */
+    // Obiekt ViewBinding dający dostęp do widoków zadeklarowanych w activity_main.xml
     private ActivityMainBinding binding;
 
-    /** Controller that manages navigation between fragments */
+    // Kontroler obsługujący nawigację między fragmentami
     NavController navController;
 
     /**
-     * Called when the activity is first created. Initializes layout, navigation host,
-     * and bottom navigation behavior.
+     * Wywoływana przy tworzeniu aktywności. Inicjalizuje układ, hosta nawigacji
+     * i zachowanie dolnego paska nawigacyjnego.
      *
-     * @param savedInstanceState state from previous instance if available
+     * @param savedInstanceState zapisany stan, jeśli wcześniej istniał
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inflate the layout and bind it
+        // Nadmuchanie (inflacja) layoutu i przypisanie bindingu
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set up navigation host and controller
+        // Pobranie hosta nawigacji zdefiniowanego w XML i uzyskanie kontrolera
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);
         navController = navHostFragment.getNavController();
 
-        // Link bottom nav menu to navigation controller
+        // Powiązanie dolnego menu nawigacyjnego z kontrolerem nawigacji
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        // Update bottom nav selection on destination change
+        // Ręczne zaznaczenie odpowiedniej ikony w menu przy zmianie ekranu
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int destId = destination.getId();
             BottomNavigationView navView = binding.navView;
