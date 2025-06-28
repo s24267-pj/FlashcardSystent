@@ -57,3 +57,27 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
+
+afterEvaluate {
+    val androidExtension = project.extensions.findByName("android") as? com.android.build.gradle.AppExtension
+    if (androidExtension != null) {
+        tasks.register<org.gradle.api.tasks.javadoc.Javadoc>("generateJavadoc") {
+            val variant = androidExtension.applicationVariants.first { it.name == "debug" }
+
+            source = variant.javaCompileProvider.get().source
+            classpath = files(variant.javaCompileProvider.get().classpath) + files(androidExtension.bootClasspath)
+
+            (options as org.gradle.external.javadoc.StandardJavadocDocletOptions).apply {
+                addStringOption("Xdoclint:none", "-quiet")
+                encoding = "UTF-8"
+                charSet = "UTF-8"
+            }
+
+            exclude("**/module-info.java")
+            isFailOnError = false
+        }
+    } else {
+        println("⚠️ Could not find android extension. Skipping javadoc task.")
+    }
+}
+
