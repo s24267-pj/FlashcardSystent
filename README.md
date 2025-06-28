@@ -33,3 +33,7 @@ This application allows users to learn using flashcards in an easy and fast way.
 - **Marathon Mode**
   - A run of X cards against the clock  
   - Leaderboard  
+
+
+# Javadoc
+https://s24267-pj.github.io/FlashcardSystent/
