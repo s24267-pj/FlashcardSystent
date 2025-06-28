@@ -24,7 +24,9 @@ This application allows users to learn using flashcards in an easy and fast way.
   - Instant feedback (correct/incorrect)  
   - Quiz results summary  
 - **Simple Statistics**
-  - Number of cards reviewed per day/week  
+  - Number of completed quizes with correct and wrong answers
+  - Number of classic sessions
+  - Number or correct and wrong answers from last quiz
 
 ## COULD
 - **Light Mode** (bright UI theme)
